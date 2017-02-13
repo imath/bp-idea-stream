@@ -1,19 +1,18 @@
 <?php
 /**
- * WP Idea Stream BuddyPress integration : groups.
+ * BP Idea Stream integration : groups.
  *
  * BuddyPress / Groups
  * - The BP Group Extension of the plugin
  * - A BP Suggestions class to use the 2.1 BuddyPress autocomplete API
  *
- * @package WP Idea Stream
- * @subpackage buddypress/groups
+ * @package BP Idea Stream
  *
- * @since  2.0.0
+ * @since  1.0.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'BP_Idea_Stream_Group' ) && class_exists( 'BP_Group_Extension' ) ) :
 /**
@@ -33,10 +32,7 @@ if ( ! class_exists( 'BP_Idea_Stream_Group' ) && class_exists( 'BP_Group_Extensi
  * I've tried to organize the class to first show the methods that are part
  * of the Group Extension API, then the methods that are specific to IdeaStream.
  *
- * @package WP Idea Stream
- * @subpackage buddypress/groups
- *
- * @since  2.0.0
+ * @since  1.0.0
  */
 class BP_Idea_Stream_Group extends BP_Group_Extension {
 
@@ -46,10 +42,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Constructor
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 */
 	public function __construct() {
 		/**
@@ -70,16 +63,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Registers the IdeaStream group extension and sets some globals
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses wp_idea_stream_root_slug() to get the IdeaStream root slug
-	 * @uses wp_idea_stream_archive_title() to get the IdeaStream archive page title
-	 * @uses BP_Idea_Stream_Group->enable_nav_item() to display or not the IdeaStream nav item for the group
-	 * @uses BP_Idea_Stream_Group::groups_activated() to check if BuddyPress group integration setting is on.
-	 * @uses BP_Group_Extension::init()
+	 * @since  1.0.0
 	 */
 	public function init_vars() {
 		$args = array(
@@ -120,15 +104,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Loads IdeaStream navigation if the group activated the extension
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses   BP_Idea_Stream_Group::groups_activated() to check if BuddyPress group integration setting is on.
-	 * @uses   bp_get_current_group_id() to get the group id
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check if extension is active for the group.
-	 * @return bool true if the extension is active for the group, false otherwise
+	 * @since  1.0.0
 	 */
 	public function enable_nav_item() {
 		if ( ! self::groups_activated() ) {
@@ -146,15 +122,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * The create screen method
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $group_id the group ID
-	 * @uses   bp_is_group_creation_step() to make sure it's the extension create step
-	 * @uses   bp_get_new_group_id() to get the just created group ID
-	 * @uses   BP_Idea_Stream_Group->edit_screen() to display the group extension settings form
 	 */
 	public function create_screen( $group_id = null ) {
 		// Bail if not looking at this screen
@@ -172,14 +142,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * The create screen save method
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $group_id the group ID
-	 * @uses   bp_get_new_group_id() to get the just created group ID
-	 * @uses   BP_Idea_Stream_Group->edit_screen_save() to save the group extension settings
 	 */
 	public function create_screen_save( $group_id = null ) {
 		// Check for possibly empty group_id
@@ -195,19 +160,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 *
 	 * Used in Group Administration, Edit and Create screens
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $group_id the group ID
-	 * @uses   is_admin() to check if we're in WP Administration
-	 * @uses   checked() to add a checked attribute to checkbox if needed
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to get the needed group metas.
-	 * @uses   wp_idea_stream_is_comments_allowed() to check if commenting ideas is globally allowed
-	 * @uses   bp_is_group_admin_page() to check if the group edit screen is displayed
-	 * @uses   BP_Idea_Stream_Group->group_has_ideas() to check if Ideas are attached to current group
-	 * @uses   wp_nonce_field() to add a security token to check upon once submitted
 	 * @return string html output
 	 */
 	public function edit_screen( $group_id = null ) {
@@ -224,7 +179,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 		if ( ! $is_admin ) : ?>
 
-			<h4><?php printf( esc_html__( '%s group settings', 'wp-idea-stream' ), $this->name ); ?></h4>
+			<h4><?php printf( esc_html__( '%s group settings', 'bp-idea-stream' ), $this->name ); ?></h4>
 
 		<?php endif; ?>
 
@@ -232,7 +187,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 			<?php if ( $is_admin ) : ?>
 
-				<legend class="screen-reader-text"><?php printf( esc_html__( '%s group settings', 'wp-idea-stream' ), $this->name ); ?></legend>
+				<legend class="screen-reader-text"><?php printf( esc_html__( '%s group settings', 'bp-idea-stream' ), $this->name ); ?></legend>
 
 			<?php endif; ?>
 
@@ -241,7 +196,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 					<label>
 						<label for="_group_ideastream_activate">
 							<input type="checkbox" id="_group_ideastream_activate" name="_group_ideastream_activate" value="1" <?php checked( self::group_get_option( $group_id, '_group_ideastream_activate', false ) )?>>
-								<?php printf( __( 'Activate %s.', 'wp-idea-stream' ), $this->name );?>
+								<?php printf( __( 'Activate %s.', 'bp-idea-stream' ), $this->name );?>
 							</input>
 						</label>
 						<?php echo $br;
@@ -250,7 +205,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						?>
 						<label for="_group_ideastream_comments">
 							<input type="checkbox" id="_group_ideastream_comments" name="_group_ideastream_comments" value="1" <?php checked( self::group_get_option( $group_id, '_group_ideastream_comments', true ) )?>>
-								<?php esc_html_e( 'Allow members to comment on ideas.', 'wp-idea-stream' );?>
+								<?php esc_html_e( 'Allow members to comment on ideas.', 'bp-idea-stream' );?>
 							</input>
 						</label>
 						<?php
@@ -259,7 +214,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						echo $br;?>
 						<label for="_group_ideastream_categories">
 							<input type="checkbox" id="_group_ideastream_categories" name="_group_ideastream_categories" value="1" <?php checked( true, self::group_get_option( $group_id, '_group_ideastream_categories', true ) );?>>
-								<?php esc_html_e( 'Use Categories.', 'wp-idea-stream' );?>
+								<?php esc_html_e( 'Use Categories.', 'bp-idea-stream' );?>
 							</input>
 						</label>
 					</label>
@@ -282,7 +237,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 					<div class="checkbox">
 						<label for="_group_ideastream_remove_ideas">
 							<input type="checkbox" id="_group_ideastream_remove_ideas" name="_group_ideastream_remove_ideas" value="1">
-								<?php esc_html_e( 'Remove all ideas.', 'wp-idea-stream' );?>
+								<?php esc_html_e( 'Remove all ideas.', 'bp-idea-stream' );?>
 							</input>
 						</label>
 					</div>
@@ -290,7 +245,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			</div>
 
 			<?php if ( bp_is_group_admin_page() ) : ?>
-				<input type="submit" name="save" value="<?php _e( 'Save', 'wp-idea-stream' );?>" />
+				<input type="submit" name="save" value="<?php _e( 'Save', 'bp-idea-stream' );?>" />
 			<?php endif; ?>
 
 		</fieldset>
@@ -303,23 +258,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Save the settings for the current the group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param int $group_id the group id we save settings for
-	 * @uses  check_admin_referer() to check the request was made on the site
-	 * @uses  bp_get_current_group_id() to get the group id
-	 * @uses  wp_parse_args() to merge args with defaults
-	 * @uses  groups_update_groupmeta() to set the extension option
-	 * @uses  bp_is_group_admin_page() to check the group edit screen is displayed
-	 * @uses  wp_idea_stream_user_can() to check user's capability
-	 * @uses  BP_Idea_Stream_Group->remove_from_group() to remove ideas from group
-	 * @uses  bp_core_add_message() to give a feedback to the user
-	 * @uses  bp_core_redirect() to safely redirect the user
-	 * @uses  bp_get_group_permalink() to build the group permalink
-	 * @uses  buddypress() to get BuddyPress instance
 	 */
 	public function edit_screen_save( $group_id = null ) {
 
@@ -363,7 +304,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 			// Only redirect on Manage screen
 			if ( bp_is_group_admin_page() ) {
-				bp_core_add_message( __( 'Settings saved successfully', 'wp-idea-stream' ) );
+				bp_core_add_message( __( 'Settings saved successfully', 'bp-idea-stream' ) );
 				bp_core_redirect( bp_get_group_permalink( buddypress()->groups->current_group ) . 'admin/' . $this->slug );
 			}
 		}
@@ -372,13 +313,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adds a Meta Box in Group's Administration screen
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $group_id  the group id
-	 * @uses   BP_Idea_Stream_Group->edit_screen() to display the group extension settings form
 	 */
 	public function admin_screen( $group_id = null ) {
 		$this->edit_screen( $group_id );
@@ -387,13 +324,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Saves the group settings (set in the Meta Box of the Group's Administration screen)
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $group_id  the group id
-	 * @uses   BP_Idea_Stream_Group->edit_screen_save() to save the group extension settings
 	 */
 	public function admin_screen_save( $group_id = null ) {
 		$this->edit_screen_save( $group_id );
@@ -406,20 +339,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * - single idea
 	 * - ideas loop
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @global $wp_query
-	 * @uses   bp_get_current_group_id() to get the group id
-	 * @uses   wp_idea_stream_tag_get_slug() to get the ideas tag taxonomy slug
-	 * @uses   wp_idea_stream_category_get_slug() to get the ideas category taxonomy slug
-	 * @uses   get_query_var() to get the value of the needed query var
-	 * @uses   wp_idea_stream_search_rewrite_id() to get the search ideas rewrite id
-	 * @uses   add_filter() to temporarly override some IdeaStream vars
-	 * @uses   wp_idea_stream_template_part() to load the needed template part
-	 * @uses   remove_filter() to remove the temporary filters
 	 * @return string html output
 	 */
 	public function display( $group_id = null ) {
@@ -437,7 +359,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		// Default vars
 		$template_slug = 'archive';
 		$template_name = '';
-		$filters = array( 'ideas_query_args' );
+		$filters = array( 'ideas_query_args', 'template_paths' );
 		$this->group_ideastream->query_args = array(
 			'meta_query' => array(
 				array(
@@ -502,12 +424,20 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	}
 
 	/**
+	 * Temporarly add the plugin's templates folder to the stack.
+	 *
+	 * @since 1.0.0
+	 */
+	public function template_paths( $paths = array() ) {
+		$paths[] = untrailingslashit( bp_idea_stream()->templates_dir );
+
+		return $paths;
+	}
+
+	/**
 	 * We do not use group widgets
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @return boolean false
 	 */
@@ -522,14 +452,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 *
 	 * Can be customized from IdeaStream global Settings
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool $default  Groups are by default integrated in IdeaStream
-	 * @uses   bp_get_option() to get the value of the setting
-	 * @uses   apply_filters() call 'bp_idea_stream_groups_activated' to override the groups integration setting
 	 * @return bool           true if Groups Integration is enabled, false otherwise
 	 */
 	public static function groups_activated( $default = true ) {
@@ -539,16 +464,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Gets the group meta, use default if meta value is not set
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int     $group_id the group ID
 	 * @param  string  $option   meta key
 	 * @param  mixed   $default  the default value to fallback with
-	 * @uses   groups_get_groupmeta() to get the meta value
-	 * @uses   apply_filters() call "bp_idea_stream_groups_option{$option}" to override the group meta value
 	 * @return mixed             the meta value
 	 */
 	public static function group_get_option( $group_id = 0, $option = '', $default = '' ) {
@@ -572,16 +492,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Checks if the WordPress Administration screen is a single Group One
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int     $group_id the group ID
 	 * @param  string  $option   meta key
 	 * @param  mixed   $default  the default value to fallback with
-	 * @uses   groups_get_groupmeta() to get the meta value
-	 * @uses   apply_filters() call "wp_idea_stream_is_group_admin" to override the retval
 	 * @return mixed             the meta value
 	 */
 	public static function is_group_admin() {
@@ -614,15 +529,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Used when a group changes status and when a private/hidden group
 	 * removes ideas.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $args bulk edit args
-	 * @uses   wp_parse_args() to merge args with defaults
-	 * @uses   bulk_edit_posts() to bulk edit the ideas stati
-	 * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
 	 * @return array        associative array of the bulk result (updated, skipped, locked)
 	 */
 	public static function bulk_edit_ideas_status( $args = array() ) {
@@ -655,14 +564,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Checks if current group has attached ideas
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @global $wpdb
 	 * @param  int $group_id  the group ID
-	 * @uses   bp_get_current_group_id() to get the current group ID
 	 * @return int            the number of attached ideas for the group
 	 */
 	public function group_has_ideas( $group_id = 0, $get_ids = false ) {
@@ -682,14 +587,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Gets the number of ideas for a list of groups
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @global $wpdb
 	 * @param  array $group_ids  a list of group IDs
-	 * @uses   wp_parse_id_list() to clean up an array, comma- or space-separated list of IDs
 	 * @return array            the list of groups with their ideas count
 	 */
 	public function count_groups_ideas( $group_ids = array() ) {
@@ -721,23 +622,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Removes one or more ideas from a group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @global $wpdb
 	 * @param  int $idea_id  the idea ID (0 to remove all ideas)
 	 * @param  int $group_id the group ID
-	 * @uses   bp_get_current_group_id() to get the current group ID
-	 * @uses   delete_post_meta() to delete the ideastream post meta for one idea
-	 * @uses   bp_is_group() to be sure the idea was posted within a group
-	 * @uses   groups_get_current_group() to get the current group object
-	 * @uses   apply_filters() call 'bp_idea_stream_reset_idea_status' to override the idea(s) reset status
-	 * @uses   get_post_status_object() to check a post status is valid
-	 * @uses   BP_Idea_Stream_Group->bulk_edit_ideas_status() to change the ideas status
-	 * @uses   do_action() call 'bp_idea_stream_remove_from_group' to perform custom actions
-	 * @uses   buddypress() to get BuddyPress instance
 	 * @return bool          true if removed, false otherwose
 	 */
 	public function remove_from_group( $idea_id = 0, $group_id = 0 ) {
@@ -839,12 +728,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Adds the needed actions to extend IdeaStream in order to display/post and manage
 	 * ideas within a group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses  add_action() to perform custom actions at key points
+	 * @since  1.0.0
 	 */
 	public function setup_actions() {
 		/** Map IdeaStream ************************************************************/
@@ -907,12 +791,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adds the needed filters to override IdeaStream key vars
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses  add_filter() to override IdeaStream key vars
+	 * @since  1.0.0
 	 */
 	public function setup_filters() {
 		// First register the Group Integration setting in IdeaStream global settings
@@ -980,17 +859,14 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Add the Groups Integration setting field to IdeaStream global settings
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $setting_fields the IdeaStream setting fields
 	 * @return array                  same settings with the Groups integration incorporated
 	 */
 	public function group_global_settings( $setting_fields = array() ) {
 		$setting_fields['ideastream_settings_buddypress']['_ideastream_groups_integration'] = array(
-			'title'             => __( 'BuddyPress Groups', 'wp-idea-stream' ),
+			'title'             => __( 'BuddyPress Groups', 'bp-idea-stream' ),
 			'callback'          => array( $this, 'buddypress_groups_setting_callback' ),
 			'sanitize_callback' => 'absint',
 			'args'              => array()
@@ -1002,13 +878,8 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Callback for the Groups integration setting field
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
+	 * @since  1.0.0
 	 *
-	 * @since  2.0.0
-	 *
-	 * @uses   BP_Idea_Stream_Group::groups_activated() to get BuddyPress group integration setting
-	 * @uses   checked() to add a checked attribute to the checkbox if needed
 	 * @return string HTML output
 	 */
 	public function buddypress_groups_setting_callback() {
@@ -1016,7 +887,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		?>
 
 		<input name="_ideastream_groups_integration" id="_ideastream_groups_integration" type="checkbox" value="1" <?php checked( $active ); ?> />
-		<label for="_ideastream_groups_integration"><?php esc_html_e( 'Activate WP Idea Stream in Groups', 'wp-idea-stream' ); ?></label>
+		<label for="_ideastream_groups_integration"><?php esc_html_e( 'Activate WP Idea Stream in Groups', 'bp-idea-stream' ); ?></label>
 
 		<?php
 	}
@@ -1027,10 +898,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Using IdeaStream in BuddyPress needs to be sure the status is not pending as for now
 	 * Group Admins cannot edit ideas and publish them.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $default the idea status
 	 * @return string          publish
@@ -1048,15 +916,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * 'private' group > 'private' ideas status only
 	 * 'public' group  > 'publish' ideas status only
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $status  the default status to return
 	 * @param  array  $ideaarr the posted array when an idea is submitted
-	 * @uses   bp_is_group() to be sure the idea was posted within a group
-	 * @uses   groups_get_current_group() to get the current group object
 	 * @return string          a status consistent with current group's visibility
 	 */
 	public function group_idea_status( $status = 'publish', $ideaarr = array() ) {
@@ -1076,18 +939,12 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Hide the idea categories if needed in the group's new idea form
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool   $show     whether to list categories
 	 * @param  int    $idea_id  the ID of the idea
 	 * @param  string $taxonomy the taxonomy identifier
-	 * @uses   bp_get_current_group_id() to get the current group ID
-	 * @uses   wp_idea_stream_get_tag() to check for the tag taxonomy
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for current group setting
-	 * @return [type]            [description]
+	 * @return bool             Whether to show or hide categories.
 	 */
 	public function group_list_categories( $show = true, $idea_id = 0, $taxonomy = '' ) {
 		if ( ! bp_get_current_group_id() ) {
@@ -1108,21 +965,12 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Maps the user's capabilities for the group's context
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array $caps Capabilities for meta capability
 	 * @param  string $cap Capability name
 	 * @param  int $user_id User id
 	 * @param  mixed $args Arguments
-	 * @uses   bp_is_group() to make sure the user is displaying a group
-	 * @uses   groups_get_current_group() to get the current group object
-	 * @uses   groups_is_user_member() to check if the user is a member of the group
-	 * @uses   groups_is_user_admin() to check if the user is an admin of the group
-	 * @uses   groups_is_user_mod() to check if the user is a mod of the group
-	 * @uses   apply_filters() call 'bp_idea_stream_group_map_meta_caps' to override caps
 	 * @return array Actual capabilities for meta capability
 	 */
 	public function group_map_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
@@ -1261,17 +1109,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Make sure a group admin can edit his ideas from the group's context
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool     $early_filter true if should be able to edit, false otherwise
 	 * @param  WP_Post  $idea         the idea object
-	 * @uses   bp_is_group() to check we're in the group's context
-	 * @uses   wp_idea_stream_users_current_user_id() to get current user's id
-	 * @uses   bp_get_current_group_id() to get the current group's id
-	 * @uses   groups_is_user_admin() to check if the user is a group admin
 	 * @return bool                   true if should be able to edit, false otherwise
 	 */
 	public function group_admin_self_edit( $early_filter = false, $idea = null ) {
@@ -1301,15 +1142,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Updates group's latest activity in case an idea or a comment was inserted
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int     $object_id  an idea or comment ID
 	 * @param  object  $object     an idea or comment object
-	 * @uses   get_post_meta() to get the attached group ID
-	 * @uses   groups_update_last_activity() to update latest group's activity
 	 */
 	public function group_last_activity( $object_id = 0, $object = null ) {
 		if ( empty( $object ) ) {
@@ -1341,18 +1177,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Builds a link to the Group's ideas archive page
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  BP_Groups_Group  $group    a group object
 	 * @param  bool             $fallback whether to use a fallback url
-	 * @uses   groups_get_current_group() to test if a current group is set
-	 * @uses   bp_get_groups_directory_permalink() to get the Groups directory permalink
-	 * @uses   bp_get_group_permalink() to build the link to group's home
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses   wp_idea_stream_root_slug() to get IdeaStream root slug
 	 * @return string           permalink to the group's main idea page
 	 */
 	public function group_ideas_archive_url( $group = null, $fallback = false ) {
@@ -1391,23 +1219,12 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * As this will be used in admin and in many places, we use it to catch
 	 * idea's attached group for a later use
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string   $permalink the url to the idea built by WordPress
 	 * @param  WP_Post  $idea      the idea object
 	 * @param  bool     $leavename
 	 * @param  int      $group_id  whether to check the post meta or not if already set
-	 * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
-	 * @uses   get_post_meta() to get the attached group ID
-	 * @uses   groups_get_current_group() to test if a current group is set
-	 * @uses   groups_get_group() to get a group using a group ID
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses   BP_Idea_Stream_Group::groups_activated() to check if Groups Integration is on
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to build the idea permalink
-	 * @uses   wp_idea_stream_idea_get_slug() to get the idea slug part of the url
 	 * @return string              the idea permalink in its group context if needed, unchanged otherwise
 	 */
 	public function group_idea_permalink( $permalink = '', $idea = null, $leavename = false, $group_id = 0 ) {
@@ -1479,19 +1296,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Builds the term link inside a group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $termlink the built in WordPress link
 	 * @param  object $term     the requested term
 	 * @param  string $taxonomy the taxonomy of the term
-	 * @uses   wp_idea_stream_get_tag() to get the ideas tag taxonomy identifier
-	 * @uses   wp_idea_stream_tag_get_slug() to get the ideas tag slug
-	 * @uses   wp_idea_stream_get_category() to get the ideas category taxonomy identifier
-	 * @uses   wp_idea_stream_category_get_slug() to get the ideas category slug
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to build the termlink
 	 * @return string           the term link in its group's context if needed
 	 */
 	public function group_taxo_permalink( $termlink = '', $term = null, $taxonomy = '' ) {
@@ -1517,21 +1326,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Buils the link to the add new idea form
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  mixed   $form_url false or the url to use
 	 * @param  string  $type     the context of the form ('add' or 'edit')
 	 * @param  string $idea_name the post name of the idea to edit
-	 * @uses   wp_idea_stream_addnew_slug() to get the add slug
-	 * @uses   bp_get_group_permalink() to get the group's permalink
-	 * @uses   groups_get_current_group() to get the current group's object
-	 * @uses   wp_idea_stream_action_slug() to get the action slug
-	 * @uses   wp_idea_stream_edit_slug() to get the edit slug
-	 * @uses   add_query_arg() to a add query vars to an url
-	 * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
 	 * @return string            the form url
 	 */
 	public function group_form_url( $form_url = false, $type = '', $idea_name = '' ) {
@@ -1554,13 +1353,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Map IdeaStream default's redirect url for the group's context
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $redirect url to redirect the user to
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to build the group's redirect url
 	 * @return string           the redirect url
 	 */
 	public function group_redirect_url( $redirect = '' ) {
@@ -1574,19 +1369,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Map the orderby action form to group's context
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $action the action form attribute
 	 * @param  string the current category term slug if set
 	 * @param  string the current tag term slug if set
-	 * @uses   bp_is_group() to check a group is displayed
-	 * @uses   BP_Idea_Stream_Group->group_taxo_permalink() to build the term link in the group's context
-	 * @uses   wp_idea_stream_get_tag() to get the tag taxonomy slug
-	 * @uses   wp_idea_stream_get_category() to get the category taxonomy slug
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to get the group's IdeaStream archive page
 	 * @return string the action attribute
 	 */
 	public function set_sort_action_url( $action = '', $category = '', $tag = '' ) {
@@ -1608,14 +1395,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Map the search form action to group's IdeaStream archive url
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $action the action form attribute
-	 * @uses   bp_is_group() to check a group is displayed
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to get the group's IdeaStream archive page
 	 * @return string the action attribute
 	 */
 	public function set_search_action_url( $action = '' ) {
@@ -1633,17 +1415,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * This methods hooks the action 'wp_idea_stream_set_single_template' which is fired
 	 * once the core single template is defined.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  WP_Post $idea the idea object
-	 * @uses   get_post_meta() to get the attached group's ID
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses   BP_Idea_Stream_Group::groups_activated() to check if Groups Integration is on
-	 * @uses   bp_core_redirect() to safely redirect the user
-	 * @uses   BP_Idea_Stream_Group->group_idea_permalink() to build the idea permalink in its group's context
 	 */
 	public function maybe_redirect_to_group( $idea = null ) {
 		if ( empty( $idea->ID ) ) {
@@ -1662,15 +1436,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Checks if an idea is (still) attached to the current group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  WP_Post  $idea the idea object
-	 * @uses   groups_get_current_group() to get the current group's object
-	 * @uses   bp_get_current_group_id() to get current group's ID
-	 * @uses   get_post_meta() to get the group's ID attached to the idea
 	 * @return bool           true if idea is attached to current group, false otherwise
 	 */
 	public function is_idea_attached_to_group( $idea = null ) {
@@ -1704,26 +1472,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Handles group's moderating actions about ideas
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses bp_is_group() to check a group is displayed
-	 * @uses bp_is_current_action() to check the group's current action
-	 * @uses wp_idea_stream_root_slug() to get the IdeaStream root slug
-	 * @uses wp_idea_stream_action_get_slug() to get the IdeaStream's action slug
-	 * @uses bp_action_variable() to get a specific action variable
-	 * @uses groups_get_current_group() to get the current group's object
-	 * @uses BP_Idea_Stream_Group->group_ideas_archive_url() to get the group's IdeaStream archive page
-	 * @uses check_admin_referer() to check the request was made on the site
-	 * @uses wp_idea_stream_user_can() to check user's capability
-	 * @uses BP_Idea_Stream_Group->remove_from_group() to remove one or more ideas from a group
-	 * @uses wp_get_referer() to get the url the user came from
-	 * @uses wp_spam_comment() to spam a comment made on an idea
-	 * @uses wp_trash_comment() to trash a comment made on an idea
-	 * @uses wp_idea_stream_add_message() to add a feedback to display to the user once redirected
-	 * @uses bp_core_redirect() to safely redirect the user
+	 * @since  1.0.0
 	 */
 	public function group_actions() {
 		if ( ! bp_is_group() ) {
@@ -1759,7 +1508,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 				if ( ! bp_action_variable( 2 ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Removing the idea failed.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Removing the idea failed.', 'bp-idea-stream' );
 					break;
 				}
 
@@ -1767,17 +1516,17 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 				if ( ! wp_idea_stream_user_can( 'remove_group_ideas' ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Removing the idea failed. You do not have the capability to remove ideas.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Removing the idea failed. You do not have the capability to remove ideas.', 'bp-idea-stream' );
 					break;
 				}
 
 				if ( false === $this->remove_from_group( $idea_id, $group->id ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Removing the idea failed.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Removing the idea failed.', 'bp-idea-stream' );
 					$redirect = wp_get_referer();
 				} else {
 					$feedback['type']    = 'success';
-					$feedback['content'] = __( 'The idea was successfully removed.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'The idea was successfully removed.', 'bp-idea-stream' );
 				}
 				break;
 
@@ -1789,7 +1538,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 				if ( ! bp_action_variable( 2 ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Spamming the comment failed.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Spamming the comment failed.', 'bp-idea-stream' );
 					break;
 				}
 
@@ -1797,16 +1546,16 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 				if ( ! wp_idea_stream_user_can( 'spam_group_idea_comments' ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Spamming the comment failed. You do not have the capability to spam comments.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Spamming the comment failed. You do not have the capability to spam comments.', 'bp-idea-stream' );
 					break;
 				}
 
 				if ( false === wp_spam_comment( $comment_id ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Spamming the comment failed.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Spamming the comment failed.', 'bp-idea-stream' );
 				} else {
 					$feedback['type']    = 'success';
-					$feedback['content'] = __( 'The comment was successfully marked as spam.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'The comment was successfully marked as spam.', 'bp-idea-stream' );
 				}
 
 				break;
@@ -1819,7 +1568,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 				if ( ! bp_action_variable( 2 ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Deleting the comment failed.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Deleting the comment failed.', 'bp-idea-stream' );
 					break;
 				}
 
@@ -1827,16 +1576,16 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 				if ( ! wp_idea_stream_user_can( 'trash_group_idea_comments' ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Deleting the comment failed. You do not have the capability to delete comments.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Deleting the comment failed. You do not have the capability to delete comments.', 'bp-idea-stream' );
 					break;
 				}
 
 				if ( false === wp_trash_comment( $comment_id ) ) {
 					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Deleting the comment failed.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'Deleting the comment failed.', 'bp-idea-stream' );
 				} else {
 					$feedback['type']    = 'success';
-					$feedback['content'] = __( 'The comment was successfully deleted.', 'wp-idea-stream' );
+					$feedback['content'] = __( 'The comment was successfully deleted.', 'bp-idea-stream' );
 				}
 
 				break;
@@ -1854,45 +1603,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Map IdeaStream needed vars to the group's context and prepare the
 	 * group's extension display method
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses bp_is_group() to check a group is displayed
-	 * @uses bp_is_current_action() to check the group's current action
-	 * @uses wp_idea_stream_root_slug() to get the IdeaStream root slug
-	 * @uses BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses bp_get_current_group_id() to get current group's ID
-	 * @uses bp_core_redirect() to safely redirect the user
-	 * @uses bp_get_group_permalink() to get the group's permalink
-	 * @uses groups_get_current_group() to get the current group's object
-	 * @uses bp_idea_stream_set_is_ideastream() to set a new IdeaStream territory for a later use
-	 * @uses bp_action_variables() to get all action variables at once
-	 * @uses wp_idea_stream_action_get_slug() to get IdeaStream's action slug
-	 * @uses wp_idea_stream_addnew_slug() to get IdeaStream's add slug
-	 * @uses bp_idea_stream_set_is_new() to set IdeaStream global 'is_new' for a later use
-	 * @uses add_action() to add a field to the new idea form
-	 * @uses wp_idea_stream_edit_slug() to get the edit slug
-	 * @uses get_query_var() to get the value of a specific query var
-	 * @uses wp_idea_stream_get_post_type() to get the ideas post type identifier
-	 * @uses wp_idea_stream_ideas_get_idea_by_name() to get the idea object
-	 * @uses wp_idea_stream_ideas_lock_idea() to check if the idea is edited by another user
-	 * @uses wp_idea_stream_ideas_can_edit() to check if the user can edit the idea
-	 * @uses BP_Idea_Stream_Group->is_idea_attached_to_group() to check if the idea is attached to currrent group
-	 * @uses wp_idea_stream_set_idea_var() to set an IdeaStream global for a later use
-	 * @uses bp_idea_stream_set_is_edit() to set IdeaStream global 'is_edit' for a later use
-	 * @uses wp_idea_stream_idea_get_slug() to get IdeaStream's idea slug
-	 * @uses wp_idea_stream_tag_get_slug() to get the ideas tag taxonomy slug
-	 * @uses wp_idea_stream_category_get_slug() to get the ideas category taxonomy slug
-	 * @uses set_query_var() to set some query var for a later use
-	 * @uses get_term_by() to get idea's term
-	 * @uses wp_idea_stream_paged_slug() to get the ideas paged slug
-	 * @uses wp_idea_stream_add_message() to add a feedback to display to the user once redirected
-	 * @uses BP_Idea_Stream_Group->group_ideas_archive_url() to get the group's IdeaStream archive page
-	 * @uses bp_is_current_component() to check for a BuddyPress component
-	 * @uses bp_current_item() to make sure a group item is requested
-	 * @uses bp_do_404() to set the WP Query to a 404.
+	 * @since  1.0.0
 	 */
 	public function maybe_set_ideastream() {
 		if ( bp_is_group() && bp_is_current_action( wp_idea_stream_root_slug() ) ) {
@@ -1925,7 +1636,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						$idea_name = get_query_var( wp_idea_stream_get_post_type() );
 
 						if ( empty( $idea_name ) ) {
-							$message = __( 'No idea was requested', 'wp-idea-stream' );
+							$message = __( 'No idea was requested', 'bp-idea-stream' );
 						}
 
 						// Get the idea thanks to its name
@@ -1935,13 +1646,13 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						$user_is_editing = wp_idea_stream_ideas_lock_idea( $idea->ID );
 
 						if ( ! empty( $user_is_editing ) ) {
-							$message = sprintf( __( 'The idea: &#34;%s&#34; is already being edited by another user.', 'wp-idea-stream' ), $idea->post_title );
+							$message = sprintf( __( 'The idea: &#34;%s&#34; is already being edited by another user.', 'bp-idea-stream' ), $idea->post_title );
 							break;
 						}
 
 						// Does the user can edit the idea ?
 						if ( ! wp_idea_stream_ideas_can_edit( $idea ) ) {
-							$message = __( 'You are not allowed to edit this idea.', 'wp-idea-stream' );
+							$message = __( 'You are not allowed to edit this idea.', 'bp-idea-stream' );
 							break;
 						}
 
@@ -1963,11 +1674,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 							add_action( 'wp_idea_stream_ideas_the_idea_meta_edit', array( $this, 'meta_group_id' ) );
 
 						} else {
-							$message = __( 'The idea was not found in this group.', 'wp-idea-stream' );
+							$message = __( 'The idea was not found in this group.', 'bp-idea-stream' );
 						}
 
 					} else {
-						$message = __( 'The action requested is not available', 'wp-idea-stream' );
+						$message = __( 'The action requested is not available', 'bp-idea-stream' );
 					}
 					break;
 
@@ -1975,7 +1686,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				case wp_idea_stream_idea_get_slug() :
 					// No name, stop
 					if ( empty( $actions[1] ) ) {
-						$message = __( 'No idea was requested', 'wp-idea-stream' );
+						$message = __( 'No idea was requested', 'bp-idea-stream' );
 						break;
 					}
 					// Get the idea thanks to its name
@@ -1993,7 +1704,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						wp_idea_stream_set_idea_var( 'single_idea_id', $idea->ID );
 
 					} else {
-						$message = __( 'The idea was not found in this group.', 'wp-idea-stream' );
+						$message = __( 'The idea was not found in this group.', 'bp-idea-stream' );
 					}
 					break;
 
@@ -2001,13 +1712,13 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				case wp_idea_stream_category_get_slug() :
 					// No term name, stop
 					if ( empty( $actions[1] ) ) {
-						$message = sprintf( __( 'No %s was requested', 'wp-idea-stream' ), $actions[0] );
+						$message = sprintf( __( 'No %s was requested', 'bp-idea-stream' ), $actions[0] );
 						break;
 					}
 
 					// Does the group support categories ?
 					if ( $actions[0] == wp_idea_stream_category_get_slug() && ! self::group_get_option( bp_get_current_group_id(), '_group_ideastream_categories', true ) ) {
-						$message = sprintf( __( 'This group does not support the %s feature.', 'wp-idea-stream' ), $actions[0] );
+						$message = sprintf( __( 'This group does not support the %s feature.', 'bp-idea-stream' ), $actions[0] );
 						break;
 					}
 
@@ -2039,7 +1750,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						// Set the current term
 						wp_idea_stream_set_idea_var( 'current_term', $this->group_ideastream->current_term );
 					} else {
-						$message = sprintf( __( 'The %s was not found', 'wp-idea-stream' ), $actions[0] );
+						$message = sprintf( __( 'The %s was not found', 'bp-idea-stream' ), $actions[0] );
 						break;
 					}
 					break;
@@ -2095,10 +1806,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Map the IdeaStream is_single global to the group's context
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool $single true if viewing and idea in its single template
 	 * @return bool         true if viewing a single idea in its group's context, false otherwise
@@ -2114,14 +1822,8 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Output the group's IdeaStream screen title
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
+	 * @since  1.0.0
 	 *
-	 * @since  2.0.0
-	 *
-	 * @uses   add_filter() to temporarly override needed ideastream redirect url
-	 * @uses   wp_idea_stream_reset_post_title() to build the screen title
-	 * @uses   remove filter() to remove temporary filter
 	 * @return string HTML output
 	 */
 	public function display_screen_title() {
@@ -2142,13 +1844,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Displays a message in case the user is not a member of the group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $output the message to output to the user
-	 * @uses   bp_is_group()  to check a group is displayed
 	 * @return string         the message to output to the user adapted to group's context
 	 */
 	public function group_not_member( $output = '' ) {
@@ -2156,16 +1854,13 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			return $output;
 		}
 
-		return esc_html__( 'You must be a member of the group to post ideas', 'wp-idea-stream' );
+		return esc_html__( 'You must be a member of the group to post ideas', 'bp-idea-stream' );
 	}
 
 	/**
 	 * Loop temporary filter: set loop's arguments
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $query_args the default loop arguments
 	 * @return array              the arguments adapted to group's context
@@ -2177,16 +1872,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Loop temporary filter: set pagination base
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $pagination_args the default paginate arguments
-	 * @uses   bp_is_group()  to check a group is displayed
-	 * @uses   wp_idea_stream_tag_get_slug() to get the ideas tag taxonomy slug
-	 * @uses   wp_idea_stream_category_get_slug() to get the ideas category taxonomy slug
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to get the group's IdeaStream archive page
 	 * @return array                   the paginate arguments adapted to group's context
 	 */
 	public function set_pagination_base( $pagination_args = '' ) {
@@ -2215,12 +1903,8 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adds a new field to the idea's form containing the current group ID
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
+	 * @since  1.0.0
 	 *
-	 * @since  2.0.0
-	 *
-	 * @uses bp_get_current_group_id() to get current group's ID
 	 * @return string HTML output
 	 */
 	public function meta_group_id() {
@@ -2232,18 +1916,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Gets a link containing the group's avatar and eventually its name
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int  $idea_id the ID of the idea
 	 * @param  int  $hw      the height and width value in pixels
 	 * @param  bool $name    whether to include group's name or not
-	 * @uses   bp_core_fetch_avatar() to get group's avatar
-	 * @uses   esc_url() to sanitize the url
-	 * @uses   bp_get_group_permalink() to get group's permalink
-	 * @uses   esc_attr() to sanitize an attribute
 	 * @return string        the group avatar link
 	 */
 	public function group_get_avatar_link( $idea_id = 0, $hw = 20, $name = true ) {
@@ -2289,21 +1966,12 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adapts idea's footer to group's context
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string  $footer       footer's output
 	 * @param  array   $retarray     footer's part organized in an array
 	 * @param  WP_Post $idea         the idea object
 	 * @param  array   $placeholders footer's placeholders for the utility text
-	 * @uses   BP_Idea_Stream_Group->group_get_avatar_link() to get the link to the group
-	 * @uses   wp_idea_stream_user_can() to check user's capability
-	 * @uses   esc_url() to sanitize the url
-	 * @uses   get_edit_post_link() to get the link to edit the idea in Administration
-	 * @uses   wp_nonce_url() to add a security token to check upon once the link clicked
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to get the group's IdeaStream archive page
 	 * @return string            the footer adapted to group's context if needed
 	 */
 	public function group_idea_footer_links( $footer = '', $retarray = array(), $idea = null, $placeholders = array() ) {
@@ -2317,11 +1985,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 			if ( ! empty( $avatar_link ) ) {
 				// Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
-				$retarray['utility_text'] = _x( 'This idea was posted from the group %4$s on %3$s.', 'group idea footer utility text', 'wp-idea-stream' );
+				$retarray['utility_text'] = _x( 'This idea was posted from the group %4$s on %3$s.', 'group idea footer utility text', 'bp-idea-stream' );
 
 				if ( ! empty( $placeholders['category'] ) ) {
 					// Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
-					$retarray['utility_text'] = _x( 'This idea was posted in %1$s from the group %4$s on %3$s.', 'group idea attached to at least one category footer utility text', 'wp-idea-stream' );
+					$retarray['utility_text'] = _x( 'This idea was posted in %1$s from the group %4$s on %3$s.', 'group idea attached to at least one category footer utility text', 'bp-idea-stream' );
 					$category_list = $placeholders['category'];
 				} else {
 					$category_list = '';
@@ -2329,12 +1997,12 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 				if ( ! empty( $placeholders['tag'] ) ) {
 					// Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
-					$retarray['utility_text'] = _x( 'This idea was tagged %2$s and posted from the group %4$s on %3$s.', 'group idea attached to at least one tag footer utility text', 'wp-idea-stream' );
+					$retarray['utility_text'] = _x( 'This idea was tagged %2$s and posted from the group %4$s on %3$s.', 'group idea attached to at least one tag footer utility text', 'bp-idea-stream' );
 					$tag_list = $placeholders['tag'] ;
 
 					if ( ! empty( $placeholders['category'] ) ) {
 						// Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
-						$retarray['utility_text'] =  _x( 'This idea was posted in %1$s from the group %4$s and tagged %2$s on %3$s.', 'group idea attached to at least one tag and one category footer utility text', 'wp-idea-stream' );
+						$retarray['utility_text'] =  _x( 'This idea was posted in %1$s from the group %4$s and tagged %2$s on %3$s.', 'group idea attached to at least one tag and one category footer utility text', 'bp-idea-stream' );
 					}
 				} else {
 					$tag_list = '';
@@ -2364,7 +2032,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		}
 
 		if ( empty( $retarray['edit'] ) && wp_idea_stream_user_can( 'wp_idea_stream_ideas_admin' ) ) {
-			$retarray['edit'] = '<a href="' . esc_url( get_edit_post_link( $idea->ID ) ) .'" title="' . esc_attr__( 'Edit Idea', 'wp-idea-stream' ) . '">' . esc_html__( 'Edit Idea', 'wp-idea-stream' ) . '</a>';
+			$retarray['edit'] = '<a href="' . esc_url( get_edit_post_link( $idea->ID ) ) .'" title="' . esc_attr__( 'Edit Idea', 'bp-idea-stream' ) . '">' . esc_html__( 'Edit Idea', 'bp-idea-stream' ) . '</a>';
 		}
 
 		if ( ! empty( $retarray['edit'] ) && is_super_admin( $idea->post_author ) && ! wp_idea_stream_user_can( 'wp_idea_stream_ideas_admin' ) ) {
@@ -2373,7 +2041,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 		if ( wp_idea_stream_user_can( 'remove_group_ideas' ) ) {
 			$remove_url = wp_nonce_url( trailingslashit( $this->group_ideas_archive_url() . 'action/remove-idea/' . $idea->ID ), 'group-remove-idea' );
-			$retarray['moderate_idea'] = '<a href="' . esc_url( $remove_url ) .'" title="' . esc_attr__( 'Remove Idea', 'wp-idea-stream' ) . '" class="remove-idea">' . esc_html__( 'Remove Idea', 'wp-idea-stream' ) . '</a>';
+			$retarray['moderate_idea'] = '<a href="' . esc_url( $remove_url ) .'" title="' . esc_attr__( 'Remove Idea', 'bp-idea-stream' ) . '" class="remove-idea">' . esc_html__( 'Remove Idea', 'bp-idea-stream' ) . '</a>';
 		}
 
 		return join( ' ', $retarray );
@@ -2382,17 +2050,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Checks whether comments should be opened or not in the current group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool $open    can we comment the idea ?
 	 * @param  int  $idea_id the ID of the idea
-	 * @uses   bp_is_group()  to check a group is displayed
-	 * @uses   bp_get_current_group_id() to get current group's ID
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses   wp_idea_stream_user_can() to check user's capabilities
 	 * @return bool          true if comments are opened, false otherwise
 	 */
 	public function group_comments_open( $open = true, $idea_id = 0 ) {
@@ -2419,19 +2080,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adds a spam and trash link to the edit comment link
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string  $link       the edit comment link
 	 * @param  int     $comment_id the comment ID
 	 * @param  string  $text
-	 * @uses   bp_is_group()  to check a group is displayed
-	 * @uses   wp_idea_stream_user_can() to check user's capability
-	 * @uses   wp_nonce_url() to add a security token to check upon once the link clicked
-	 * @uses   BP_Idea_Stream_Group->group_ideas_archive_url() to get the group's IdeaStream archive page
-	 * @uses   esc_url() to sanitize the url
 	 * @return string               the edit comment link with moderation links if needed
 	 */
 	public function group_moderate_comments_links( $link = '', $comment_id = 0, $text = '' ) {
@@ -2450,12 +2103,12 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 		if ( wp_idea_stream_user_can( 'spam_group_idea_comments' ) && ! is_super_admin( $comment->user_id ) && bp_loggedin_user_id() != $comment->user_id ) {
 			$spam_url = wp_nonce_url( trailingslashit( $this->group_ideas_archive_url() . 'action/spam-comment/' . $comment_id ), 'group-spam-comment' );
-			$comment_links['spam'] = '<a class="comment-spam-link" href="' . esc_url( $spam_url ) . '" title="' . esc_attr__( 'Spam comment', 'wp-idea-stream' ) . '">' . esc_html__( 'Spam', 'wp-idea-stream' ) . '</a>';
+			$comment_links['spam'] = '<a class="comment-spam-link" href="' . esc_url( $spam_url ) . '" title="' . esc_attr__( 'Spam comment', 'bp-idea-stream' ) . '">' . esc_html__( 'Spam', 'bp-idea-stream' ) . '</a>';
 		}
 
 		if ( wp_idea_stream_user_can( 'trash_group_idea_comments' ) ) {
 			$spam_url = wp_nonce_url( trailingslashit( $this->group_ideas_archive_url() . 'action/trash-comment/' . $comment_id ), 'group-trash-comment' );
-			$comment_links['trash'] = '<a class="comment-trash-link" href="' . esc_url( $spam_url ) . '" title="' . esc_attr__( 'Delete comment', 'wp-idea-stream' ) . '">' . esc_html__( 'Delete', 'wp-idea-stream' ) . '</a>';
+			$comment_links['trash'] = '<a class="comment-trash-link" href="' . esc_url( $spam_url ) . '" title="' . esc_attr__( 'Delete comment', 'bp-idea-stream' ) . '">' . esc_html__( 'Delete', 'bp-idea-stream' ) . '</a>';
 		}
 
 		return join( ' ', $comment_links );
@@ -2464,14 +2117,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Make sure the BuddyPress 2.1 @mention autocomplete is running in group's context
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool   $retval whether to include mentions scripts or not
-	 * @uses  bp_is_current_action() to check the group's current action
-	 * @uses  wp_idea_stream_root_slug() to get the IdeaStream root slug
 	 * @return bool           true if viewing a single idea in group's context
 	 */
 	public function maybe_load_mentions_scripts( $retval = false ) {
@@ -2485,13 +2133,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Resets the WP_Query post globals to the group's page one
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @global $wp_query
-	 * @uses   bp_is_group()  to check a group is displayed
 	 */
 	public function maybe_reset_group() {
 		global $wp_query;
@@ -2506,15 +2150,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Out of the group, prefix the idea's title with a group dashicon
 	 * (in case the idea is attached to a group)
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool    $title the prefix
 	 * @param  WP_Post $idea  the idea object
-	 * @uses   bp_is_group()  to check a group is displayed
-	 * @uses   get_post_meta() to check if the idea is attached to a group
 	 * @return string  Output for the title prefix
 	 */
 	public function group_idea_title( $title = false, $idea = null ) {
@@ -2556,16 +2195,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Registers 2 new activity actions for the groups component
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $activity_actions the existing IdeaStream activity actions
-	 * @uses   BP_Idea_Stream_Group::groups_activated() to check if Groups Integration is on
-	 * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
-	 * @uses   get_post_type_object() to get the ideas post type labels
-	 * @uses   buddypress() to get BuddyPress instance
 	 * @return array  the activity actions with the ones specific to groups component if needed
 	 */
 	public static function group_activity_context( $activity_actions = array() ) {
@@ -2581,17 +2213,17 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			'new_group_idea' => (object) array(
 				'component'         => buddypress()->groups->id,
 				'type'              => 'new_' . self::$post_type,
-				'admin_caption'     => sprintf( _x( 'New %s published', 'activity admin dropdown caption', 'wp-idea-stream' ), mb_strtolower( self::$post_type_object->labels->singular_name, 'UTF-8' ) ),
+				'admin_caption'     => sprintf( _x( 'New %s published', 'activity admin dropdown caption', 'bp-idea-stream' ), mb_strtolower( self::$post_type_object->labels->singular_name, 'UTF-8' ) ),
 				'action_callback'   => array( __CLASS__, 'group_format_idea_action' ),
-				'front_caption'     => sprintf( _x( '%s', 'activity front dropdown caption', 'wp-idea-stream' ), self::$post_type_object->labels->name ),
+				'front_caption'     => sprintf( _x( '%s', 'activity front dropdown caption', 'bp-idea-stream' ), self::$post_type_object->labels->name ),
 				'contexts'          => array( 'activity', 'group', 'member', 'member_groups' ),
 			),
 			'new_group_comment' => (object) array(
 				'component'         => buddypress()->groups->id,
 				'type'              => 'new_' . self::$post_type . '_comment',
-				'admin_caption'     => sprintf( _x( 'New %s comment posted', 'activity comment admin dropdown caption', 'wp-idea-stream' ), mb_strtolower( self::$post_type_object->labels->singular_name, 'UTF-8' ) ),
+				'admin_caption'     => sprintf( _x( 'New %s comment posted', 'activity comment admin dropdown caption', 'bp-idea-stream' ), mb_strtolower( self::$post_type_object->labels->singular_name, 'UTF-8' ) ),
 				'action_callback'   => array( __CLASS__, 'group_format_comment_action' ),
-				'front_caption'     => sprintf( _x( '%s comments', 'activity comments front dropdown caption', 'wp-idea-stream' ), self::$post_type_object->labels->singular_name ),
+				'front_caption'     => sprintf( _x( '%s comments', 'activity comments front dropdown caption', 'bp-idea-stream' ), self::$post_type_object->labels->singular_name ),
 				'contexts'          => array( 'activity', 'group', 'member', 'member_groups' ),
 			),
 		);
@@ -2602,15 +2234,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Check the idea's status is consistent with group's visibility
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  WP_Post  $idea     the idea object
 	 * @param  int      $group_id the group ID
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses   groups_get_group() to get a group's object thanks to its ID
 	 * @return bool               true if status and visibility are consistent
 	 */
 	public static function check_idea_match_group( $idea = null, $group_id = 0 ) {
@@ -2654,17 +2281,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Gets the group ID
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $idea_id the idea ID
-	 * @uses   bp_is_group() to check a group is displayed
-	 * @uses   bp_get_current_group_id() to get the current group ID
-	 * @uses   wp_idea_stream_is_admin() to check if in IdeaStream Admin
-	 * @uses   BP_Idea_Stream_Group::is_group_admin() to check if on the group's Administration screen
-	 * @uses   get_post_meta() to get the idea post meta
 	 * @return int          the group ID of the idea
 	 */
 	public static function ideastream_group_id( $idea_id = 0 ) {
@@ -2696,16 +2315,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Makes sure, if the idea/comment is posted within a group, the related activity
 	 * is attached to groups component and its item id is set to the current group.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  BP_Activity_Activity $activity the activity object just before being saved
 	 * @param  WP_Post              $idea     the idea object
-	 * @uses   BP_Idea_Stream_Group::ideastream_group_id() to get the group ID
-	 * @uses   BP_Idea_Stream_Group::check_idea_match_group() to check idea's status is consistent with group's visibility
-	 * @uses   wp_idea_stream_set_idea_var() to globalize a var
 	 * @return BP_Activity_Activity           the activity to be saved
 	 */
 	public function group_adjust_activity( $activity = null, $idea = null ) {
@@ -2733,16 +2346,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adjust private activity in case the idea is attached to a group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array   $private_activity the activity arguments
 	 * @param  WP_Post $idea             the idea object
-	 * @uses   BP_Idea_Stream_Group::ideastream_group_id() to get the group ID
-	 * @uses   wp_idea_stream_set_idea_var() to globalize a var
-	 * @uses   buddypress() to get BuddyPress instance
 	 * @return array   the activity arguments adapted to the group's context if needed
 	 */
 	public function private_group_activity( $private_activity = array(), $idea = null ) {
@@ -2780,20 +2387,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Make sure moving an idea to a group is also moving the corresponding activities
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array   $edit_args the arguments of the edited idea
 	 * @param  WP_Post $idea      the idea object
-	 * @uses   buddypress() to get BuddyPress instance
-	 * @uses   get_current_blog_id() to get current blog ID
-	 * @uses   wp_idea_stream_get_idea_var() to get globalized group id
-	 * @uses   wp_idea_stream_set_idea_var() to set the globalized var
-	 * @uses   get_post_meta() to get the idea post meta
-	 * @uses   BP_Idea_Stream_Group::check_idea_match_group() to check idea's status is consistent with group's visibility
-	 * @uses   delete_post_meta() to remove the idea's group ID post meta if needed
 	 * @return array   the edit arguments with component set to groups and item id to the group's item
 	 */
 	public function update_group_activity( $edit_args = array(), $idea = null ) {
@@ -2833,10 +2430,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Disallow idea filters if the group doesn't support ideas
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.1.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $tracking_args Post Type activities arguments
 	 * @return array                 unchanged tracking args if the group supports ideas,
@@ -2857,19 +2451,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Action formatting callback for ideas posted within a group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string               $action   the activity action string
 	 * @param  BP_Activity_Activity $activity the activity object
-	 * @uses   buddypress() to get BuddyPress instance
-	 * @uses   groups_get_group() to get a group's object thanks to its ID
-	 * @uses   esc_url() to sanitize the url
-	 * @uses   bp_get_group_permalink() to get group's home link
-	 * @uses   esc_html() to sanitize output
-	 * @uses   bp_core_get_userlink() to build user's profile link
 	 * @return string           the action string adapted to group's context
 	 */
 	public static function group_format_idea_action( $action = '', $activity = null ) {
@@ -2893,7 +2478,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		$group_link = '<a href="' . esc_url( bp_get_group_permalink( $group ) ) . '">' . esc_html( $group->name ) . '</a>';
 
 		$action = sprintf(
-			_x( '%1$s wrote a new %2$s in the group %3$s', 'idea posted group activity action', 'wp-idea-stream' ),
+			_x( '%1$s wrote a new %2$s in the group %3$s', 'idea posted group activity action', 'bp-idea-stream' ),
 			bp_core_get_userlink( $activity->user_id ),
 			'<a href="' . esc_url( $activity->primary_link ) . '">' . esc_html( mb_strtolower( self::$post_type_object->labels->singular_name, 'UTF-8' ) ) . '</a>',
 			$group_link
@@ -2905,20 +2490,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Action formatting callback for comments posted within a group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string               $action   the activity action string
 	 * @param  BP_Activity_Activity $activity the activity object
-	 * @uses   buddypress() to get BuddyPress instance
-	 * @uses   groups_get_group() to get a group's object thanks to its ID
-	 * @uses   wp_idea_stream_comments_get_comment_link() to get the comment link
-	 * @uses   esc_url() to sanitize the url
-	 * @uses   bp_get_group_permalink() to get group's home link
-	 * @uses   esc_html() to sanitize output
-	 * @uses   bp_core_get_userlink() to build user's profile link
 	 * @return string           the action string adapted to group's context
 	 */
 	public static function group_format_comment_action( $action = '', $activity = null ) {
@@ -2948,7 +2523,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		$group_link = '<a href="' . esc_url( bp_get_group_permalink( $group ) ) . '">' . esc_html( $group->name ) . '</a>';
 
 		$action = sprintf(
-			_x( '%1$s replied to this %2$s posted in the group %3$s', 'idea commented group activity action', 'wp-idea-stream' ),
+			_x( '%1$s replied to this %2$s posted in the group %3$s', 'idea commented group activity action', 'bp-idea-stream' ),
 			bp_core_get_userlink( $activity->user_id ),
 			'<a href="' . esc_url( $primary_link ) . '">' . esc_html( mb_strtolower( self::$post_type_object->labels->singular_name, 'UTF-8' ) ) . '</a>',
 			$group_link
@@ -2962,18 +2537,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Loads the needed scripts for the Groups autocomplete control
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $hooksuffix the admin page being loaded
-	 * @uses   wp_idea_stream_is_admin() to check for any IdeaStream Administration screens
-	 * @uses   bp_loggedin_user_id() to get current user's ID
-	 * @uses   get_post_field() to get the idea author
-	 * @uses   wp_enqueue_script() to add the script to WordPress queue
-	 * @uses   wp_idea_stream_get_js_script() to get a specific javascript
-	 * @uses   wp_idea_stream_get_version() to get plugin's version
 	 * @uses   wp_localize_script() to internatianlize data used in the script
 	 */
 	public function admin_scripts( $hooksuffix = '' ) {
@@ -2987,18 +2553,15 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			$js_vars['author'] = get_post_field( 'post_author', absint( $_GET['post'] ) );
 		}
 
-		wp_enqueue_script( 'wp-idea-stream-admin-script', wp_idea_stream_get_js_script( 'script' ), array( 'jquery', 'wp-ajax-response', 'jquery-ui-autocomplete' ), wp_idea_stream_get_version(), true );
-		wp_localize_script( 'wp-idea-stream-admin-script', 'wp_idea_stream_vars', $js_vars );
+		wp_enqueue_script ( 'bp-idea-stream-admin-script' );
+		wp_localize_script( 'bp-idea-stream-admin-script', 'bp_idea_stream_vars', $js_vars );
 	}
 
 	/**
 	 * Inform the BuddyPress Suggestions API to use plugin's class
 	 * to build the groups suggestions
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $class the class to use
 	 * @param  array  $args  [description]
@@ -3016,15 +2579,8 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Searches for groups given some characters and returns
 	 * the found suggestions
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
+	 * @since  1.0.0
 	 *
-	 * @since  2.0.0
-	 *
-	 * @uses   wp_idea_stream_user_can() to check for user's capability
-	 * @uses   sanitize_text_field() to sanitize the search terms
-	 * @uses   bp_loggedin_user_id() to get current user's ID
-	 * @uses   bp_core_get_suggestions() to get the matching suggestions
 	 * @return string the groups suggestions
 	 */
 	public function ajax_group_search() {
@@ -3076,10 +2632,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Registers a new metabox in Idea Administration screens
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $metaboxes the list of IdeaStream's metaboxes
 	 * @return array  the list of metaboxes and the one for selecting the group
@@ -3088,7 +2641,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		$group_metabox = array(
 			'group' => array(
 				'id'            => 'bp_idea_stream_group_box',
-				'title'         => __( 'BuddyPress Group', 'wp-idea-stream' ),
+				'title'         => __( 'BuddyPress Group', 'bp-idea-stream' ),
 				'callback'      => array( 'BP_Idea_Stream_Group', 'group_do_idea_metabox' ),
 				'context'       => 'side',
 				'priority'      => 'core'
@@ -3100,20 +2653,17 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adds specific group's messages to the IdeaStream's one
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $messages the messages displayed to user when an idea is updated
 	 * @return array            the same messages including the ones for the group's context
 	 */
 	public function updated_messages( $messages = array() ) {
-		$messages[17] = $messages[1] . '<br/>' . esc_html__( 'The author of the idea needs to be a member of the group selected', 'wp-idea-stream' );
-		$messages[18] = $messages[1] . '<br/>' . esc_html__( 'Idea successfully removed from group', 'wp-idea-stream' );
-		$messages[19] = $messages[1] . '<br/>' . esc_html__( 'Idea successfully added to group', 'wp-idea-stream' );
-		$messages[20] = $messages[1] . '<br/>' . esc_html__( 'Status of the idea is not compatible with the group visibility', 'wp-idea-stream' );
-		$messages[21] = $messages[1] . '<br/>' . esc_html__( 'Group was not found.', 'wp-idea-stream' );
+		$messages[17] = $messages[1] . '<br/>' . esc_html__( 'The author of the idea needs to be a member of the group selected', 'bp-idea-stream' );
+		$messages[18] = $messages[1] . '<br/>' . esc_html__( 'Idea successfully removed from group', 'bp-idea-stream' );
+		$messages[19] = $messages[1] . '<br/>' . esc_html__( 'Idea successfully added to group', 'bp-idea-stream' );
+		$messages[20] = $messages[1] . '<br/>' . esc_html__( 'Status of the idea is not compatible with the group visibility', 'bp-idea-stream' );
+		$messages[21] = $messages[1] . '<br/>' . esc_html__( 'Group was not found.', 'bp-idea-stream' );
 
 		return $messages;
 	}
@@ -3121,21 +2671,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Builds the Group metabox output in Idea Administration screens
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  WP_Post $idea the idea object
-	 * @uses   get_post_meta() to get the idea's attached group
-	 * @uses   groups_get_group() to get a group's object thanks to its ID
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses   esc_attr() to sanitize an attribute
-	 * @uses   checked() to add a checked attribute to the checkbox if needed
-	 * @uses   esc_url() to sanitize an url
-	 * @uses   esc_html() to sanitize output
-	 * @uses   wp_nonce_field() to add a security token to check upon once submitted
-	 * @uses   do_action() Calls 'bp_idea_stream_do_group_metabox' to perform custom actions
 	 * @return string  HTML output
 	 */
 	public static function group_do_idea_metabox( $idea = null ) {
@@ -3156,10 +2694,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		}
 		?>
 			<strong class="label" for="bp_idea_stream_group">
-				<?php esc_html_e( 'Search in groups to select one:', 'wp-idea-stream' ); ?>
+				<?php esc_html_e( 'Search in groups to select one:', 'bp-idea-stream' ); ?>
 			</strong>
 			<p class="description">
-				<?php esc_html_e( 'Only groups where WP Idea Stream is activated and where the author of this idea is a member of will show.', 'wp-idea-stream' ); ?>
+				<?php esc_html_e( 'Only groups where WP Idea Stream is activated and where the author of this idea is a member of will show.', 'bp-idea-stream' ); ?>
 			</p>
 			<p>
 				<input type="text" id="bp_idea_stream_group"/>
@@ -3172,7 +2710,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						</strong>
 					</input>
 				<?php else : ?>
-					<p class="description"><?php esc_html_e( 'This idea is not associated to any group', 'wp-idea-stream');?></p>
+					<p class="description"><?php esc_html_e( 'This idea is not associated to any group', 'bp-idea-stream');?></p>
 				<?php endif; ?>
 			</div>
 
@@ -3188,22 +2726,12 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Saves the preferences set in the Group's metabox
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int      $id     the idea ID
 	 * @param  WP_Post  $idea   the idea object
-	 * @param  boolean $update  whether it's an idea update or not
-	 * @uses   buddypress() to get BuddyPress instance
-	 * @uses   check_admin_referer() to check the request was made on the site
-	 * @uses   get_post_meta() to get the idea's attached group
-	 * @uses   delete_post_meta() to remove the attached group
-	 * @uses   groups_is_user_member() to check the author is member of the group
-	 * @uses   groups_get_group() to get a group's object thanks to its ID
-	 * @uses   wp_idea_stream_set_idea_var() to set an IdeaStream global for a later use
-	 * @uses   do_action() Calls 'bp_idea_stream_group_changed' to perform custom actions
+	 * @param  boolean  $update whether it's an idea update or not
+	 * @return int              the idea ID
 	 */
 	public function save_group_idea_metabox( $id = 0, $idea = null, $update = false ) {
 		// Initialize vars
@@ -3331,17 +2859,14 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adds a manage column to Ideas Administration screen to display the attached group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array  $columns the manage columns
 	 * @return array           the new manage columns
 	 */
 	public function manage_columns_header( $columns = array() ) {
 		$new_columns = array(
-			'group_idea' => '<span class="vers"><span title="' . esc_attr__( 'Groups', 'wp-idea-stream' ) .'" class="idea-group-bubble"></span></span>',
+			'group_idea' => '<span class="vers"><span title="' . esc_attr__( 'Groups', 'bp-idea-stream' ) .'" class="idea-group-bubble"></span></span>',
 		);
 
 		// Eventually move rates column after group one
@@ -3356,14 +2881,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Fill row column with the corresponding group's avatar
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string  $column  the name of the column
 	 * @param  int     $idea_id the ID of the ID
-	 * @uses   BP_Idea_Stream_Group->group_get_avatar_link() to get the link to the group
 	 * @return string  HTML output
 	 */
 	public function manage_columns_data( $column = '', $idea_id = 0 ) {
@@ -3382,10 +2903,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Adds the Groups help tabs
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage admin/groups
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  array  $help_tabs the list of help tabs
 	 * @return array             the new list of help tabs
@@ -3396,7 +2914,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			$ideas_overview = array_search( 'ideas-overview', $ideas_help_tabs );
 
 			if ( isset( $help_tabs['ideas']['add_help_tab'][ $ideas_overview ]['content'] ) ) {
-				$help_tabs['ideas']['add_help_tab'][ $ideas_overview ]['content'][] = esc_html__( 'The Buddypress Group metabox allows you to select a group the author is member of, and attach the idea to that group. Private or hidden groups will require the idea to have the status set to private.', 'wp-idea-stream' );
+				$help_tabs['ideas']['add_help_tab'][ $ideas_overview ]['content'][] = esc_html__( 'The Buddypress Group metabox allows you to select a group the author is member of, and attach the idea to that group. Private or hidden groups will require the idea to have the status set to private.', 'bp-idea-stream' );
 			}
 		}
 
@@ -3410,14 +2928,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 *
 	 * This will be in the function to render the count ideas groups manage column.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @global $bp_groups_list_table
-	 * @uses   wp_list_pluck() to pluck a certain field out of each object in a list.
-	 * @uses   number_format_i18n() to convert integer number to format based on the locale.
 	 */
 	public function catch_ideas_per_group() {
 		global $bp_groups_list_table;
@@ -3442,17 +2955,14 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Add new columns to the Groups WP List Table
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  array  $columns the WP List Table columns
 	 * @return array           the new columns
 	 */
 	public function groups_manage_column_header( $columns = array() ) {
 		$new_columns = array(
-			'ideas_count' => _x( '# Ideas', 'ideas groups admin column header', 'wp-idea-stream' ),
+			'ideas_count' => _x( '# Ideas', 'ideas groups admin column header', 'bp-idea-stream' ),
 		);
 
 		$temp_remove_columns = array( 'last_active' );
@@ -3473,15 +2983,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Fills the groups WP List Table custom columns datarows
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  string $data        the data for custom column
 	 * @param  string $column_name the column name
 	 * @param  array  $group       the group's data (row)
-	 * @uses   esc_html() to sanitize output
 	 * @return string HTML output
 	 */
 	public function groups_manage_column_data( $data = '', $column_name = '', $group = array() ) {
@@ -3496,13 +3002,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * Catch the group's being edited from Group's Admin screen
 	 * Append the new requested status for a later use
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $doaction the group's admin action
-	 * @uses   groups_get_group() to get a specific group
 	 */
 	public function admin_transtion_group_status( $doaction = '' ) {
 		if ( empty( $doaction ) || 'save' != $doaction ) {
@@ -3531,19 +3033,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * we need to bulk edit ideas to be sure ideas stati are consistent with group's
 	 * visibility.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int     $group_id the group ID
-	 * @uses   BP_Idea_Stream_Group::group_get_option() to check for the group setting
-	 * @uses   BP_Idea_Stream_Group::groups_activated() to check if Groups Integration is on
-	 * @uses   groups_get_current_group() to get current group
-	 * @uses   groups_get_group() to get a specific group
-	 * @uses   BP_Idea_Stream_Group->group_has_ideas() to get the list of idea ids
-	 * @uses   BP_Idea_Stream_Group::bulk_edit_ideas_status to bulk edit the ideas stati
-	 * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
 	 */
 	public function bulk_ideas_stati( $group_id = 0 ) {
 		// Don't carry on if we don't need to!
@@ -3604,13 +3096,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Remove all ideas attached to a deleted group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $group_id the ID of the deleted group
-	 * @uses   BP_Idea_Stream_Group->remove_from_group() to remove one or more ideas from a group
 	 */
 	public function remove_deleted_group_ideas( $group_id = 0 ) {
 		if ( empty( $group_id ) ) {
@@ -3631,15 +3119,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Check the user is still a member of the group before trashing the idea
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $idea_id the ID of the trashed idea
-	 * @uses   get_post_meta() to get the group's ID
-	 * @uses   groups_is_user_member() to check the user is still a member of the group
-	 * @uses   delete_post_meta() to remove the attached group
 	 */
 	public function check_user_is_member( $idea_id = 0, $user_id = 0 ) {
 		if ( empty( $idea_id ) || empty( $user_id ) ) {
@@ -3656,23 +3138,10 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Remove ideas of a banned / removed user from group
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  int $group_id the ID of the group
 	 * @param  int $user_id the ID of the user
-	 * @uses   apply_filters() call 'bp_idea_stream_group_removed_user_ideas' to force ideas to be kept in group
-	 * @uses   add_filter() to temporarly include all post stati
-	 * @uses   wp_idea_stream_ideas_get_ideas() to get user's ideas posted in the group
-	 * @uses   remove_filter() to remove the filter
-	 * @uses   bp_loggedin_user_id() to get current user ID
-	 * @uses   BP_Idea_Stream_Idea()->save to update the idea
-	 * @uses   wp_idea_stream_user_can() to check for user's capacity
-	 * @uses   delete_post_meta() to remove the attached group
-	 * @uses   BP_Idea_Stream_Group::bulk_edit_ideas_status to bulk edit the ideas stati
-	 * @uses   do_action() call 'bp_idea_stream_user_removed_from_group' to perform custom actions
 	 */
 	public function user_removed_from_group( $group_id = 0 , $user_id = 0 ) {
 		if ( empty( $group_id ) || empty( $user_id ) ) {
@@ -3760,7 +3229,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	/**
 	 * Display the Featured image for the current idea
 	 *
-	 * @since  2.3.0
+	 * @since  1.0.0
 	 *
 	 * @return string HTML Output
 	 */
@@ -3790,10 +3259,7 @@ endif;
  *
  * Let's make sure the group id is defined before loading our stuff
  *
- * @package WP Idea Stream
- * @subpackage buddypress/groups
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @uses bp_register_group_extension() to register the group extension
  */
@@ -3816,20 +3282,14 @@ if ( ! class_exists( 'BP_Idea_Stream_Groups_Suggestions' ) && class_exists( 'BP_
 /**
  * Adds support for groups autocomplete to the Suggestions API.
  *
- * @package WP Idea Stream
- * @subpackage buddypress/groups
- *
- * @since  2.0.0
+ * @since  1.0.0
  */
 class BP_Idea_Stream_Groups_Suggestions extends BP_Suggestions {
 
 	/**
 	 * Default arguments for this suggestions service.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @var array $args {
 	 *     @type int    'limit'           Maximum number of groups to display.
@@ -3855,17 +3315,8 @@ class BP_Idea_Stream_Groups_Suggestions extends BP_Suggestions {
 	/**
 	 * Validate and sanitize the parameters for the suggestion service query.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
+	 * @since  1.0.0
 	 *
-	 * @since  2.0.0
-	 *
-	 * @uses   sanitize_key() to sanitize the meta key
-	 * @uses   sanitize_text_field() to sanitize the meta value
-	 * @uses   wp_idea_stream_user_can() to check for user's capability
-	 * @uses   is_user_logged_in() to be extra sure the user is logged in
-	 * @uses   apply_filters() Calls 'wp_idea_stream_groups_suggestions_args' to do extra sanitization
-	 *                         Calls 'wp_idea_stream_groups_suggestions_validate_args' to override the validation result
 	 * @return true|WP_Error If validation fails, return a WP_Error object. On success, return true (bool).
 	 */
 	public function validate() {
@@ -3895,15 +3346,8 @@ class BP_Idea_Stream_Groups_Suggestions extends BP_Suggestions {
 	/**
 	 * Find and return a list of groups suggestions that match the query.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/groups
+	 * @since  1.0.0
 	 *
-	 * @since  2.0.0
-	 *
-	 * @uses   groups_get_groups() to get the groups suggestions
-	 * @uses   bp_get_group_permalink() to build each group permalink
-	 * @uses   apply_filters() Calls 'wp_idea_stream_groups_suggestions_query_args' to override the groups query args
-	 *                         Calls 'wp_idea_stream_groups_suggestions_get_suggestions' to override the found suggestions
 	 * @return array|WP_Error Array of results. If there were problems, returns a WP_Error object.
 	 */
 	public function get_suggestions() {

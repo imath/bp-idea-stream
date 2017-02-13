@@ -9,8 +9,8 @@
  * @since 1.0.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'BP_Idea_Stream_Activity' ) ) :
 /**
@@ -32,20 +32,14 @@ if ( ! class_exists( 'BP_Idea_Stream_Activity' ) ) :
  * About comments, we will completely override BuddyPress if there are about the ideas
  * post type
  *
- * @package WP Idea Stream
- * @subpackage buddypress/activity
- *
- * @since 2.0.0
+ * @since 1.0.0
  */
 class BP_Idea_Stream_Activity {
 
 	/**
 	 * The constructor
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 		$this->setup_globals();
@@ -56,10 +50,7 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Starts the activity class
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @uses  buddypress() to get BuddyPress main instance
 	 */
@@ -76,13 +67,7 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Set some globals
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses   wp_idea_stream_get_post_type() to get ideas post type identifier
-	 * @uses   get_post_type_object() to get the post type object (essentially labels)
+	 * @since 1.0.0
 	 */
 	public function setup_globals() {
 		/**
@@ -140,12 +125,7 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Set some actions to extend BuddyPress activities to our need
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses   add_action() to perform custom actions at key points
+	 * @since 1.0.0
 	 */
 	public function setup_actions() {
 		// First register plugin's activities
@@ -175,12 +155,7 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Set some filters to override some BuddyPress vars to our need
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses   add_filter() to override some key vars
+	 * @since 1.0.0
 	 */
 	public function setup_filters() {
 		// Fake post new post types action to populate the dropdowns
@@ -210,15 +185,7 @@ class BP_Idea_Stream_Activity {
 	 * By default, IdeaStream activity actions will be attached
 	 * to the blogs component.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses  buddypress() to get BuddyPress main instance
-	 * @uses  add_post_type_support() to add the ideas post type to BuddyPress activities
-	 * @uses  bp_activity_set_post_type_tracking_arg() to register the plugin's activity actions
-	 * @uses  apply_filters() call 'bp_idea_stream_get_activity_actions' to override/add activity actions
+	 * @since 1.0.0
 	 */
 	public function register_activity_actions() {
 		/**
@@ -231,17 +198,17 @@ class BP_Idea_Stream_Activity {
 			'new_' . $this->post_type => (object) array(
 				'component'         => buddypress()->blogs->id,
 				'type'              => 'new_' . $this->post_type,
-				'admin_caption'     => sprintf( _x( 'New %s published', 'activity admin dropdown caption', 'wp-idea-stream' ), mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ),
+				'admin_caption'     => sprintf( _x( 'New %s published', 'activity admin dropdown caption', 'bp-idea-stream' ), mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ),
 				'action_callback'   => array( $this, 'format_idea_activity_action' ),
-				'front_caption'     => sprintf( _x( '%s', 'activity front dropdown caption', 'wp-idea-stream' ), $this->post_type_object->labels->name ),
+				'front_caption'     => sprintf( _x( '%s', 'activity front dropdown caption', 'bp-idea-stream' ), $this->post_type_object->labels->name ),
 				'contexts'          => array( 'activity', 'member' ),
 			),
 			'new_' . $this->post_type . '_comment' => (object) array(
 				'component'         => buddypress()->blogs->id,
 				'type'              => 'new_' . $this->post_type . '_comment',
-				'admin_caption'     => sprintf( _x( 'New %s comment posted', 'activity comment admin dropdown caption', 'wp-idea-stream' ), mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ),
+				'admin_caption'     => sprintf( _x( 'New %s comment posted', 'activity comment admin dropdown caption', 'bp-idea-stream' ), mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ),
 				'action_callback'   => array( $this, 'format_idea_comment_activity_action' ),
-				'front_caption'     => sprintf( _x( '%s comments', 'activity comments front dropdown caption', 'wp-idea-stream' ), $this->post_type_object->labels->singular_name ),
+				'front_caption'     => sprintf( _x( '%s comments', 'activity comments front dropdown caption', 'bp-idea-stream' ), $this->post_type_object->labels->singular_name ),
 				'contexts'          => array( 'activity', 'member' ),
 			),
 		) );
@@ -275,13 +242,9 @@ class BP_Idea_Stream_Activity {
 	 * Make sure the Groups/blogs activity actions appears as one component > IdeaStream
 	 * in the Activity Administration screen.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
+	 * @since 1.0.0
 	 *
-	 * @since 2.1.0
-	 *
-	 * @uses    buddypress() to get BuddyPress main instance
-	 * @return  array        new tracking args
+	 * @return  array new tracking args
 	 */
 	public function dropdown_filters( $tracking_args ) {
 		if ( ! isset( $tracking_args[ 'new_' . $this->post_type ] ) ) {
@@ -349,17 +312,13 @@ class BP_Idea_Stream_Activity {
 	 * 2/ Catch the idea in order to use it just before the activity is saved
 	 * @see  $this->adjust_activity_args();
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.1.0
+	 * @since 1.0.0
 	 *
 	 * @param  bool $true           whether to stop BuddyPress attempt to save an activity for the post type
 	 *                              by returning false
 	 * @param  int  $blog_id        the current blog id
 	 * @param  int  $post_id        the ID of the idea
 	 * @param  int  $user_id        the ID of the user
-	 * @uses   get_post()           to get the post
 	 * @return bool                 true
 	 */
 	public function catch_idea( $true = true, $blog_id = 0, $post_id = 0, $user_id = 0 ) {
@@ -377,16 +336,11 @@ class BP_Idea_Stream_Activity {
 	 *
 	 * We won't change anything to the $activity_content.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.1.0
+	 * @since 1.0.0
 	 *
 	 * @param  string  $activity_content the excerpt created by BuddyPress
 	 * @param  WP_Post $post             the post object (can be an idea)
 	 * @param  string  $post_permalink   the permalink to this object
-	 * @uses   bp_activity_get_activity_id() to get an activity id
-	 * @uses   bp_activity_delete()      to delete an activity
 	 * @return string                    the activity content unchanged
 	 */
 	public function catch_idea_comment( $retval = true, $blog_id, $post_id, $user_id, $comment_id ) {
@@ -426,17 +380,9 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * 3/ Gets the activity before it is saved and adjusts his arguments to match our need
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  BP_Activity_Activity $activity the activity object before being saved
-	 * @uses   apply_filters() call 'bp_idea_stream_pre_adjust_activity' to early override the activity object
-	 *                         call 'bp_idea_stream_adjust_activity' to override the activity object
-	 * @uses   bp_activity_set_action() to define the post type activity action if not set
-	 * @uses   bp_activity_generate_action_string() to generate the action strings using the 'action_callback'
-	 *                                              of our activity actions
 	 * @return BP_Activity_Activity           the activity to be saved
 	 */
 	public function adjust_activity_args( $activity = null ) {
@@ -499,17 +445,10 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * 4-Ideas/ Format the activity actions about a posted idea
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  string               $action   the action string
 	 * @param  BP_Activity_Activity $activity the activity object
-	 * @uses   bp_core_get_userlink() to get user's profile url
-	 * @uses   esc_url() to sanitize the primary link (unchanged)
-	 * @uses   esc_html() to sanitize the custom part of the action
-	 * @uses   apply_filters() call 'bp_idea_stream_format_idea_activity_action' to override the idea action strings
 	 * @return string                         the action adjusted for an idea if needed
 	 */
 	public function format_idea_activity_action( $action = '', $activity = null ) {
@@ -518,7 +457,7 @@ class BP_Idea_Stream_Activity {
 		}
 
 		$action = sprintf(
-			_x( '%1$s wrote a new %2$s', 'idea posted activity action', 'wp-idea-stream' ),
+			_x( '%1$s wrote a new %2$s', 'idea posted activity action', 'bp-idea-stream' ),
 			bp_core_get_userlink( $activity->user_id ),
 			'<a href="' . esc_url( $activity->primary_link ) . '">' . esc_html( mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ) . '</a>'
 		);
@@ -529,18 +468,10 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * 4-Comments/ Format the activity actions in case a comment about an idea was posted
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  string               $action   the action string
 	 * @param  BP_Activity_Activity $activity the activity object
-	 * @uses   wp_idea_stream_comments_get_comment_link() to override the primary link
-	 * @uses   bp_core_get_userlink() to get user's profile url
-	 * @uses   esc_url() to sanitize the primary link (unchanged)
-	 * @uses   esc_html() to sanitize the custom part of the action
-	 * @uses   apply_filters() call 'bp_idea_stream_format_idea_comment_activity_action' to override the comment action strings
 	 * @return string                         the action adjusted for an idea if needed
 	 */
 	public function format_idea_comment_activity_action( $action = '', $activity = null  ) {
@@ -555,7 +486,7 @@ class BP_Idea_Stream_Activity {
 		}
 
 		$action = sprintf(
-			_x( '%1$s replied to this %2$s', 'idea commented activity action', 'wp-idea-stream' ),
+			_x( '%1$s replied to this %2$s', 'idea commented activity action', 'bp-idea-stream' ),
 			bp_core_get_userlink( $activity->user_id ),
 			'<a href="' . esc_url( $primary_link ) . '">' . esc_html( mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ) . '</a>'
 		);
@@ -566,10 +497,7 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * 5/ Comments about ideas will generate an activity, never an activity comment
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  bool $option BuddyPress synchronisation setting
 	 * @return bool         true if it's an idea, unchanged otherwise
@@ -590,19 +518,11 @@ class BP_Idea_Stream_Activity {
 	 * Generally, it's the activity id about an idea merged with the activities
 	 * recorded for the comments about this idea.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  int     $idea_id     the idea ID
 	 * @param  string  $post_status the status of the idea
 	 * @param  string  $post_password the post password if set
-	 * @uses   bp_activity_get() to get activities
-	 * @uses   wp_idea_stream_get_post_type() to get the idea post type
-	 * @uses   wp_idea_stream_comments_get_comments() to get the comments about the idea
-	 * @uses   wp_filter_object_list() filters a list of objects, based on a set of key => value arguments.
-	 * @uses   wp_list_pluck() to pluck a certain field out of each object in a list.
 	 * @return array                activity ids to manage
 	 */
 	public function get_idea_and_comments( $idea_id = 0, $post_status = 'publish', $post_password = '' ) {
@@ -677,19 +597,13 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Bulk Edit activities (visibility and/or component and/or item id)
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @global $wpdb
 	 * @param  array   $activities    the list of acitivy ids to edit
 	 * @param  int     $hide_sitewide the visibility to update the activity with
 	 * @param  string  $component_id  the BuddyPress component to update the activity with
 	 * @param  int     $item_id       the item to update the activity with
-	 * @uses   buddypress() to get BuddyPress instance
-	 * @uses   wp_parse_id_list() to sanitize a list of ids
-	 * @uses   wp_cache_delete() to clean a cached value
 	 */
 	public static function bulk_edit_activity( $activities = array(), $hide_sitewide = 1, $component_id = '', $item_id = 0 ) {
 		global $wpdb;
@@ -745,24 +659,10 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Add or edit activities so that they are private
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  int     $idea_id     the idea ID
 	 * @param  WP_Post $idea        the idea object
-	 * @uses   get_post()           to get the idea object if not set
-	 * @uses   BP_Idea_Stream_Activity->get_idea_and_comments() to get activities to manage
-	 * @uses   self::bulk_edit_activity to mark activities as private
-	 * @uses   get_current_blog_id() to get the current blog ID
-	 * @uses   buddypress() to get BuddyPress instance
-	 * @uses   add_query_arg(), get_home_url() to build the link to the idea.
-	 * @uses   bp_activity_thumbnail_content_images() to take content, remove images, and replace them with a single thumbnail image
-	 * @uses   bp_create_excerpt() to generate the content of the activity
-	 * @uses   bp_activity_add() to save the private activity
-	 * @uses   apply_filters() call 'bp_blogs_record_activity_content' to apply the filters on blog posts for private ideas
-	 *                         call 'bp_idea_stream_activity_post_private' to override the private activity args
 	 */
 	public function mark_activity_private( $idea_id = 0, $idea = null ) {
 		if ( empty( $idea ) ) {
@@ -873,18 +773,10 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Delete or edit activities regarding the transition post status
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  int     $idea_id     the idea ID
 	 * @param  WP_Post $idea        the idea object
-	 * @uses   get_post()           to get the idea object if not set
-	 * @uses   BP_Idea_Stream_Activity->get_idea_and_comments() to get activities to manage
-	 * @uses   bp_activity_delete() to delete activities
-	 * @uses   self::bulk_edit_activity to mark activities as private
-	 * @uses   apply_filters() call 'bp_idea_stream_activity_edit' to override edit args
 	 */
 	public function maybe_delete_activity( $idea_id = 0, $idea = null ) {
 		if ( empty( $idea ) ) {
@@ -971,17 +863,12 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Edit activities component and/or item id
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  WP_Post $idea          the idea object
 	 * @param  string  $component_id  the BuddyPress component id to attach activities to
 	 * @param  int     $old_item_id   the previous item id activities were attached to
 	 * @param  object  $item          the new item object the activities are attached to
-	 * @uses   BP_Idea_Stream_Activity->get_idea_and_comments() to get activities to manage
-	 * @uses   self::bulk_edit_activity to edit activities (component and/or item)
 	 */
 	public function change_item_id( $idea = null, $component_id = '', $old_item_id = 0, $item = null ) {
 		// Bail if we do not have an idea
@@ -1029,20 +916,11 @@ class BP_Idea_Stream_Activity {
 	 *
 	 * Used when one or more activities are removed from a group.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  integer $item_id      the item id activities are attached to
 	 * @param  string  $component_id the BuddyPress component id activities are attached to
 	 * @param  WP_Post $idea         the idea object
-	 * @uses   get_post()           to get the idea object if not set
-	 * @uses   BP_Idea_Stream_Activity->get_idea_and_comments() to get activities to manage
-	 * @uses   bp_activity_get() to get activities
-	 * @uses   wp_idea_stream_get_post_type() to get the idea post type
-	 * @uses   wp_list_pluck() to pluck a certain field out of each object in a list.
-	 * @uses   self::bulk_edit_activity to edit activities (component and item)
 	 */
 	public function reset_activity_item_id( $item_id = 0, $component_id = '', $idea = null ) {
 		if ( empty( $item_id ) || empty( $component_id ) ) {
@@ -1094,7 +972,7 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Allow private comments about Ideas
 	 *
-	 * @since  2.3.1
+	 * @since  1.0.0
 	 *
 	 * @param  integer $comment_id  The comment ID
 	 * @param  boolean $is_approved Whether the comment is approved or not
@@ -1116,18 +994,11 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Manage activities about idea comments
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  string $new_status comment status applyed
 	 * @param  string $old_status previous comment status
 	 * @param  object $comment    the comment object
-	 * @uses   get_post_type() to get the post post type
-	 * @uses   remove_action() to remove BuddyPress actions
-	 * @uses   bp_activity_get() to get activities
-	 * @uses   bp_activity_delete() to delete activities
 	 */
 	public function manage_comment_activity( $new_status = '', $old_status = '', $comment = null ) {
 		// Bail if no post id, as we need to check for the post type
@@ -1192,14 +1063,10 @@ class BP_Idea_Stream_Activity {
 	 * Prevents the 'comments' button to appear in activities that relate to an idea
 	 * or a comment about an idea.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  bool   $can_comment true if the activity can be commented, false otherwise
 	 * @param  string $action      the activity type
-	 * @uses   wp_list_pluck() to pluck a certain field out of each object in a list.
 	 * @return bool false if activity has an IdeaStream type, unchanged otherwise
 	 */
 	public function activity_no_comment( $can_comment = true, $action = '' ) {
@@ -1216,10 +1083,7 @@ class BP_Idea_Stream_Activity {
 	 * Removes the comment action in Activity Admin screen, as the filter
 	 * "bp_activity_list_table_can_comment" doesn't send the item.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  array  $actions list of admin actions
 	 * @param  array  $item    the item being iterated on
@@ -1239,14 +1103,10 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Forces the "view discussion" link to be the object link.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  string $link the discussion link
 	 * @param  BP_Activity_Activity $activity the activity object
-	 * @uses   wp_list_pluck() to pluck a certain field out of each object in a list.
 	 * @return string the new discussion link if type matches one of ideastream's ones, unchanged otherwise
 	 */
 	public function activity_permalink( $link = '', $activity = null ) {
@@ -1266,15 +1126,9 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Make sure a deleted/spammed user has no more IdeaStream activities
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  int $user_id the user ID
-	 * @uses   wp_list_pluck() to pluck a certain field out of each object in a list.
-	 * @uses   bp_activity_get() to get all ideastream activities of the user
-	 * @uses   bp_activity_delete() to delete the activity
 	 */
 	public function user_deleted_activities( $user_id = 0 ) {
 		if ( empty( $user_id ) ) {
@@ -1308,15 +1162,10 @@ class BP_Idea_Stream_Activity {
 	 * Reset the component id to blogs to avoid leaving activities in groups
 	 * once the user "removed" his ideas as he left the group.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  int     $user_id the user id
 	 * @param  array   $ideas   list of WP_Post ideas objects
-	 * @uses   BP_Idea_Stream_Activity->reset_activity_item_id() to reset the activity to blogs component
-	 *                                                           and current blogs id
 	 */
 	public function user_reset_component_id( $user_id = 0, $ideas = array() ) {
 		if ( empty( $user_id ) || ! is_array( $ideas ) ) {
@@ -1333,13 +1182,9 @@ class BP_Idea_Stream_Activity {
 	/**
 	 * Add a repair tool to BuddyPress ones to repair IdeaStream group activities
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param  array  $repair_list list of repair tools
-	 * @uses   bp_is_active() to check if a component is active
 	 * @return array               new list of repair tools
 	 */
 	public function register_repair_tool( $repair_list = array() ) {
@@ -1349,7 +1194,7 @@ class BP_Idea_Stream_Activity {
 
 		$repair_list[2718] = array(
 			'ideastream-repair-groups-activities',
-			__( 'Repair WP Idea Stream activities.', 'wp-idea-stream' ),
+			__( 'Repair WP Idea Stream activities.', 'bp-idea-stream' ),
 			array( $this, 'repair_activities' ),
 		);
 
@@ -1362,20 +1207,9 @@ class BP_Idea_Stream_Activity {
 	 * In case something went wrong with group activities (visibility, component...),
 	 * this tool should repair the problematic activities.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/activity
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @global $wpdb
-	 * @uses   bp_is_active() to check if a component is active
-	 * @uses   wp_list_pluck() to pluck a certain field out of each object in a list.
-	 * @uses   bp_activity_get() to get all ideastream activities
-	 * @uses   wp_filter_object_list() to filter a list of objects, based on a set of key => value arguments.
-	 * @uses   wp_parse_id_list() to sanitize a list of ids
-	 * @uses   get_post_meta() to get the group id the idea is attached to
-	 * @uses   groups_get_groups() to get the needed groups
-	 * @uses   BP_Idea_Stream_Activity::bulk_edit_activity() to update the activities (component/item_id/visibility)
 	 * @return array the result of the repair operation.
 	 */
 	public function repair_activities() {
@@ -1384,10 +1218,10 @@ class BP_Idea_Stream_Activity {
 		$blog_id = get_current_blog_id();
 
 		// Description of this tool, displayed to the user
-		$statement = __( 'Making sure WP Idea Stream activities are consistent: %s', 'wp-idea-stream' );
+		$statement = __( 'Making sure WP Idea Stream activities are consistent: %s', 'bp-idea-stream' );
 
 		// Default to failure text
-		$result    = __( 'No activity needs to be repaired.', 'wp-idea-stream' );
+		$result    = __( 'No activity needs to be repaired.', 'bp-idea-stream' );
 
 		// Default to unrepaired
 		$repair    = 0;
@@ -1527,7 +1361,7 @@ class BP_Idea_Stream_Activity {
 
 		// Setup success/fail messaging
 		if ( ! empty( $repair ) ) {
-			$result = sprintf( __( '%d repared', 'wp-idea-stream' ), $repair );
+			$result = sprintf( __( '%d repared', 'bp-idea-stream' ), $repair );
 		}
 
 		// All done!
@@ -1542,4 +1376,3 @@ endif;
  * so that we can hook to it to set our activity actions
  */
 add_action( 'bp_init', array( 'BP_Idea_Stream_Activity', 'manage_activities' ), 7 );
-

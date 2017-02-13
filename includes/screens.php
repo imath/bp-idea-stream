@@ -1,37 +1,30 @@
 <?php
 /**
- * WP Idea Stream BuddyPress integration : screens.
+ * BP Idea Stream integration : screens.
  *
  * BuddyPress / Screens : only user's profile, IdeaStream will
  * use its own logic for the root 'component'.
  *
- * @package WP Idea Stream
- * @subpackage buddypress/screens
+ * @package BP Idea Stream
  *
- * @since  2.0.0
+ * @since  1.0.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'BP_Idea_Stream_Screens' ) ) :
 /**
  * Main Screen Class.
  *
- * @package WP Idea Stream
- * @subpackage buddypress/screens
- *
- * @since  2.0.0
+ * @since  1.0.0
  */
 class BP_Idea_Stream_Screens {
 
 	/**
 	 * The constructor
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 */
 	public function __construct() {
 		$this->setup_globals();
@@ -41,12 +34,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Starts the screens class
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses  buddypress() to get BuddyPress instance
+	 * @since  1.0.0
 	 */
 	public static function manage_screens() {
 		$ideastream = buddypress()->ideastream;
@@ -61,13 +49,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Set some globals
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses  bp_displayed_user_id() to get displayed user ID
-	 * @uses  bp_get_displayed_user_username() to get displayed user nicename
+	 * @since  1.0.0
 	 */
 	public function setup_globals() {
 		$this->screen   = '';
@@ -78,12 +60,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Set some actions
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses add_action() to customize the default members plugin template
+	 * @since  1.0.0
 	 */
 	public function setup_actions() {
 		add_action( 'bp_idea_stream_user_ideas',    array( $this, 'do_template' ) );
@@ -94,13 +71,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Cusomize title, content and pagination
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses add_action() to customize the default members plugin template title and content
-	 * @uses add_filter() to edit the pagination base regarding the displayed screen
+	 * @since  1.0.0
 	 */
 	public function do_template() {
 		if ( empty( $this->screen ) ) {
@@ -124,17 +95,10 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Load the base template for user screens
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  string $screen   the screen to display
 	 * @param  string $template the template to use
-	 * @uses   bp_core_load_template() to load the template
-	 * @uses   apply_filters() call 'bp_idea_stream_ideas_template' to override default template for "Published" screen
-	 *                         call 'bp_idea_stream_comments_template' to override default template for "Commented" screen
-	 *                         call 'bp_idea_stream_rates_template' to override default template for "Rated" screen
 	 */
 	public static function load_template( $screen = '', $template = 'members/single/plugins' ) {
 		// Bail if screen is not defined
@@ -162,15 +126,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Published ideas
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses  buddypress() to get BuddyPress instance
-	 * @uses  bp_idea_stream_set_is_ideastream() to set this part as an IdeaStream one
-	 * @uses  do_action() call 'bp_idea_stream_user_ideas' to perform custom actions on "Published" screen
-	 * @uses  self::load_template() to load the template
+	 * @since  1.0.0
 	 */
 	public static function user_ideas() {
 
@@ -190,15 +146,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Commented ideas
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses  buddypress() to get BuddyPress instance
-	 * @uses  bp_idea_stream_set_is_ideastream() to set this part as an IdeaStream one
-	 * @uses  do_action() call 'bp_idea_stream_user_comments' to perform custom actions on "Commented" screen
-	 * @uses  self::load_template() to load the template
+	 * @since  1.0.0
 	 */
 	public static function user_comments() {
 
@@ -218,15 +166,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Rated ideas
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses  buddypress() to get BuddyPress instance
-	 * @uses  bp_idea_stream_set_is_ideastream() to set this part as an IdeaStream one
-	 * @uses  do_action() call 'bp_idea_stream_user_rates' to perform custom actions on "Rated" screen
-	 * @uses  self::load_template() to load the template
+	 * @since  1.0.0
 	 */
 	public static function user_rates() {
 
@@ -246,10 +186,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Set the title part of the template
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 */
 	public function set_title() {
 		// No title needed.
@@ -259,18 +196,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Set the content part of the template
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
-	 *
-	 * @uses   bp_action_variable() to get an action variable
-	 * @uses   wp_idea_stream_cpage_slug() to get the pagination slug for user comments
-	 * @uses   wp_idea_stream_paged_slug() to get the pagination slug
-	 * @uses   bp_is_my_profile() to check if logged in user is displaying his own profile
-	 * @uses   add_filter() to temporarly customize IdeaStream Loop
-	 * @uses   wp_idea_stream_template_part() to get the needed IdeaStream template part
-	 * @uses   remove_filter() to remove the temporary filters
+	 * @since  1.0.0
 	 */
 	public function set_content() {
 		// Init vars
@@ -360,10 +286,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Apply the specific arguments to the IdeaStream Loop
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array $args the loop arguments
 	 * @return array specific arguments
@@ -375,10 +298,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Map wp_idea_stream_is_user_profile to bp_is_user
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  bool $retval true if on a user's profile, false otherwise
 	 * @return bool true if on a user's profile, false otherwise
@@ -390,10 +310,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Sets wp_idea_stream_displayed_user_id to displayed user id
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since .0.0
 	 *
 	 * @param  int $retval the displayed user id
 	 * @return int the displayed user id
@@ -405,10 +322,7 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Makes sure private ideas will be seen if current user is viewing his profile
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array $status ideas default status
 	 * @return array the status for a user viewing his own profile
@@ -420,15 +334,9 @@ class BP_Idea_Stream_Screens {
 	/**
 	 * Sets pagination base
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/screens
-	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  array $pagination_args
-	 * @uses   bp_idea_stream_get_user_rates_url() to get BuddyPressified user's profiles rates part url
-	 * @uses   bp_idea_stream_get_user_comments_url() to get BuddyPressified user's profiles comments part url
-	 * @uses   bp_idea_stream_get_user_profile_url() to get BuddyPressified user's profiles url
 	 * @return array the new pagination args if needed
 	 */
 	public function set_pagination_base( $pagination_args = '' ) {

@@ -1,17 +1,16 @@
 <?php
 /**
- * WP Idea Stream BuddyPress integration loader.
+ * BP Idea Stream integration loader.
  *
  * BuddyPress main Loader class
  *
- * @package WP Idea Stream
- * @subpackage buddypress/loader
+ * @package BP Idea Stream
  *
- * @since 2.0.0
+ * @since 1.0.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'BP_Idea_Stream_BuddyPress' ) ) :
 /**
@@ -24,23 +23,14 @@ if ( ! class_exists( 'BP_Idea_Stream_BuddyPress' ) ) :
  * (logged in and displayed user ones) and adds some stuff to extend Plugin's
  * core functions.
  *
- * @package WP Idea Stream
- * @subpackage buddypress/loader
- *
- * @since 2.0.0
+ * @since 1.0.0
  */
 class BP_Idea_Stream_Component extends BP_Component {
 
 	/**
 	 * Constructor method
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/loader
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses wp_idea_stream_archive_title() to get the main archive page title
-	 * @uses wp_idea_stream_get_includes_dir() to get the plugin's includes dir
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 
@@ -57,13 +47,7 @@ class BP_Idea_Stream_Component extends BP_Component {
 	/**
 	 * Extend WP Idea Stream
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/loader
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses  remove_filter() to avoid IdeaStream to override the comments array
-	 * @uses  add_action() to override built in user domains by BuddyPressified ones
+	 * @since 1.0.0
 	 */
 	private function extend_ideastream() {
 		/**
@@ -83,17 +67,15 @@ class BP_Idea_Stream_Component extends BP_Component {
 
 		// Filter the user domains once ideastream nav is set
 		add_action( 'bp_' . $this->id .'_setup_nav', array( $this, 'filter_user_domains' ) );
+
+		// Register the specific script.
+		add_action( 'bp_admin_enqueue_scripts', array( $this, 'register_admin_scripts' ), 1 );
 	}
 
 	/**
 	 * Include the needed files
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/loader
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses bp_is_active() to check if needed components are active
+	 * @since 1.0.0
 	 */
 	public function includes( $includes = array() ) {
 
@@ -125,13 +107,7 @@ class BP_Idea_Stream_Component extends BP_Component {
 	/**
 	 * Set up plugin's globals
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/loader
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses buddypress() to get BuddyPress instance data
-	 * @uses wp_idea_stream_root_slug() to get plugin's root slug
+	 * @since 1.0.0
 	 */
 	public function setup_globals( $args = array() ) {
 		$bp = buddypress();
@@ -150,21 +126,7 @@ class BP_Idea_Stream_Component extends BP_Component {
 	/**
 	 * Set up IdeaStream navigation.
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/loader
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses buddypress() to get BuddyPress instance data
-	 * @uses bp_loggedin_user_id() to get logged in user id
-	 * @uses bp_get_loggedin_user_username() to get logged in user nicename
-	 * @uses bp_loggedin_user_domain() to get logged in user domain
-	 * @uses bp_is_user() to check if a user's profile is displayed
-	 * @uses bp_displayed_user_id() to get the displayed user id
-	 * @uses bp_get_displayed_user_username() to get displayed user nicename
-	 * @uses bp_displayed_user_domain() to get displayed user profile link
-	 * @uses wp_idea_stream_users_get_profile_nav_items() to get IdeaStream user nav items
-	 * @uses sanitize_title(), sanitize_key() to sanitize datas
+	 * @since 1.0.0
 	 */
 	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 		$bp =  buddypress();
@@ -238,13 +200,7 @@ class BP_Idea_Stream_Component extends BP_Component {
 	/**
 	 * Builds the user's navigation in WP Admin Bar
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/loader
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses is_user_logged_in() to check if the user is logged in
-	 * @uses bp_loggedin_user_domain() to get current user's profile link
+	 * @since 1.0.0
 	 */
 	public function setup_admin_bar( $wp_admin_nav = array() ) {
 
@@ -279,15 +235,7 @@ class BP_Idea_Stream_Component extends BP_Component {
 	/**
 	 * Use BuddyPressified user profiles
 	 *
-	 * @package WP Idea Stream
-	 * @subpackage buddypress/loader
-	 *
-	 * @since 2.0.0
-	 *
-	 * @uses   bp_is_user() to check if a user's profile is displayed
-	 * @uses   bp_is_group() to check if a group is displayed
-	 * @uses   remove_filter() to stop IdeaStream from filtering nav menus
-	 * @uses   add_filter() to early override IdeaStream user's profile parts
+	 * @since 1.0.0
 	 */
 	public function filter_user_domains() {
 		// When on a BuddyPress profile / ideastream screen, the current nav item is not IdeaStream
@@ -302,6 +250,24 @@ class BP_Idea_Stream_Component extends BP_Component {
 		add_filter( 'wp_idea_stream_users_pre_get_user_comments_url', 'bp_idea_stream_get_user_comments_url', 10, 2 );
 		add_filter( 'wp_idea_stream_users_pre_get_user_rates_url',    'bp_idea_stream_get_user_rates_url',    10, 2 );
 	}
+
+	public function register_admin_scripts() {
+		$bp_idea_stream = bp_idea_stream();
+
+		$min = '.min';
+
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$min = '';
+		}
+
+		wp_register_script(
+			'bp-idea-stream-admin-script',
+			$bp_idea_stream->js_url . "script{$min}.js",
+			array( 'jquery', 'wp-ajax-response', 'jquery-ui-autocomplete' ),
+			$bp_idea_stream->version,
+			true
+		);
+	}
 }
 
 endif;
@@ -309,19 +275,7 @@ endif;
 /**
  * Finally Loads the component into BuddyPress instance
  *
- * @package WP Idea Stream
- * @subpackage buddypress/loader
- *
- * @since 2.0.0
- *
- * @uses  wp_idea_stream() to get plugin's main instance
- * @uses  buddypress() to get BuddyPress main instance
- * @uses  get_option() to check for BuddyPress integration setting
- * @uses  is_admin() to check for the Administration context
- * @uses  wp_idea_stream_get_includes_dir() to get plugin's include dir
- * @uses  wp_idea_stream_set_idea_var() to globalize a value for a later use
- * @uses  add_query_arg(), admin_url() to build an url
- * @uses  BP_Idea_Stream_BuddyPress to launch the IdeaStream BuddyPress component
+ * @since 1.0.0
  */
 function bp_idea_stream_component() {
 	// Init a dummy BuddyPress version
@@ -338,25 +292,12 @@ function bp_idea_stream_component() {
 		$bp_version = buddypress()->version;
 	}
 
-	// Should we load ? Yes, try by default!
-	if ( ! get_option( '_ideastream_buddypress_integration', 1 ) ) {
-		// Include at least BuddyPress filters & settings in order to extend
-		// WP Idea Stream Settings and let the Admin deactivate/activate BuddyPress
-		// integration.
-		if ( is_admin() ) {
-			require( bp_idea_stream()->includes_dir . 'buddypress/settings.php' );
-		}
-
-		// Prevent BuddyPress Integration load
-		return;
-	}
-
 	// If BuddyPress required version does not match, provide a feedback
 	// Does not fire if BuddyPress integration is disabled.
 	if ( ! version_compare( $bp_version, $required_buddypress_version, '>=' ) ) {
 		if ( is_admin() ) {
 			wp_idea_stream_set_idea_var( 'feedback', array( 'admin_notices' => array(
-				sprintf( esc_html__( 'To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is required. Please upgrade or deactivate %s.', 'wp-idea-stream' ),
+				sprintf( esc_html__( 'To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is required. Please upgrade or deactivate %s.', 'bp-idea-stream' ),
 					$required_buddypress_version,
 					'<a href="' . esc_url( add_query_arg( array( 'page' => 'ideastream' ), admin_url( 'options-general.php' ) ) ) . '#buddypress">"BuddyPress integration"</a>'
 				)

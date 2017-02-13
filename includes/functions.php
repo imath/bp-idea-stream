@@ -1,25 +1,21 @@
 <?php
 /**
- * WP Idea Stream BuddyPress integration : functions.
+ * BP Idea Stream integration : functions.
  *
  * BuddyPress / functions
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
+ * @package BP Idea Stream
  *
- * @since  2.0.0
+ * @since  1.0.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Map IdeaStream is self profile to BuddyPress one
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  bool $is_self  the IdeaStream self profile
  * @return bool           true if on user's on his self profile, false otherwise
@@ -32,15 +28,10 @@ add_filter( 'wp_idea_stream_is_current_user_profile', 'bp_idea_stream_is_user_pr
 /**
  * Map IdeaStream User's profile to BuddyPress one
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int     $user_id       the user ID
  * @param  string  $user_nicename the user nicename
- * @uses   bp_core_get_user_domain() to build BuddyPress user's base url
- * @uses   wp_idea_stream_root_slug() to get IdeaStream root slug
  * @return string                 the BuddyPressified user's profile url
  */
 function bp_idea_stream_get_user_profile_url( $user_id = 0, $user_nicename = '' ) {
@@ -61,15 +52,10 @@ function bp_idea_stream_get_user_profile_url( $user_id = 0, $user_nicename = '' 
 /**
  * Map IdeaStream User's profile, comments part, to BuddyPress one
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int     $user_id       the user ID
  * @param  string  $user_nicename the user nicename
- * @uses   bp_core_get_user_domain() to build BuddyPress user's base url
- * @uses   wp_idea_stream_root_slug() to get IdeaStream root slug
  * @return string                 the BuddyPressified user's profile comments url
  */
 function bp_idea_stream_get_user_comments_url( $user_id = 0, $user_nicename = '' ) {
@@ -91,15 +77,10 @@ function bp_idea_stream_get_user_comments_url( $user_id = 0, $user_nicename = ''
 /**
  * Map IdeaStream User's profile, rates part, to BuddyPress one
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int     $user_id       the user ID
  * @param  string  $user_nicename the user nicename
- * @uses   bp_core_get_user_domain() to build BuddyPress user's base url
- * @uses   wp_idea_stream_root_slug() to get IdeaStream root slug
  * @return string                 the BuddyPressified user's profile rates url
  */
 function bp_idea_stream_get_user_rates_url( $user_id = 0, $user_nicename = '' ) {
@@ -121,13 +102,9 @@ function bp_idea_stream_get_user_rates_url( $user_id = 0, $user_nicename = '' ) 
 /**
  * Map IdeaStream displayed username to BuddyPress one
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  string $username the username
- * @uses   bp_get_displayed_user_username() to get displayed user nicename
  * @return string           the username
  */
 function bp_idea_stream_displayed_user_username( $username = '' ) {
@@ -142,13 +119,9 @@ add_filter( 'wp_idea_stream_users_get_displayed_user_username', 'bp_idea_stream_
 /**
  * Map IdeaStream displayed display name to BuddyPress one
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  string $display_name the display name
- * @uses   bp_get_displayed_user_fullname() to get displayed user display name
  * @return string           the username
  */
 function bp_idea_stream_displayed_user_displayname( $display_name = '' ) {
@@ -163,16 +136,9 @@ add_filter( 'wp_idea_stream_users_get_displayed_user_displayname', 'bp_idea_stre
 /**
  * Redirect IdeaStream profile to BuddyPress one
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  string $context the context of the template
- * @uses   wp_idea_stream_users_displayed_user_id() to get displayed user ID
- * @uses   wp_idea_stream_users_get_displayed_user_username() to get displayed user nicename
- * @uses   bp_core_redirect() to redirect the user to BuddyPress profile
- * @uses   bp_idea_stream_get_user_profile_url() to get the BuddyPressified user's profile
  */
 function bp_idea_stream_profile_redirect( $context = '' ) {
 	if ( empty( $context ) || 'user-profile' != $context || wp_idea_stream_get_idea_var( 'is_user_embed' ) ) {
@@ -198,12 +164,7 @@ add_action( 'wp_idea_stream_set_core_template', 'bp_idea_stream_profile_redirect
 /**
  * Let BuddyPress handle signups by early overriding the ideastream signup url
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.1.0
- *
- * @uses bp_get_signup_page() to get BuddyPress sign up url
+ * @since  1.0.0
  */
 function bp_idea_stream_get_signup_url( $url = '' ) {
 	return bp_get_signup_page();
@@ -213,12 +174,7 @@ add_filter( 'wp_idea_stream_users_pre_get_signup_url', 'bp_idea_stream_get_signu
 /**
  * Let BuddyPress handle signups by redirecting to BuddyPress signup form
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.1.0
- *
- * @uses bp_get_signup_page() to get BuddyPress sign up url
+ * @since  1.0.0
  */
 function bp_idea_stream_signup_redirect() {
 	wp_safe_redirect( bp_get_signup_page() );
@@ -228,14 +184,7 @@ add_action( 'wp_idea_stream_user_signup_override', 'bp_idea_stream_signup_redire
 /**
  * Sets a new IdeaStream territory to load needed scripts & css
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
- *
- * @uses bp_is_user() to check a profile is displayed
- * @uses bp_is_group() to check a group is displayed
- * @uses wp_idea_stream_set_idea_var() to set the ideastream global
+ * @since  1.0.0
  */
 function bp_idea_stream_set_is_ideastream() {
 	if ( ! bp_is_user() && ! bp_is_group() ) {
@@ -248,13 +197,7 @@ function bp_idea_stream_set_is_ideastream() {
 /**
  * Sets the new idea form global to load needed scripts
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
- *
- * @uses bp_is_group() to check a group is displayed
- * @uses wp_idea_stream_set_idea_var() to set the new form global
+ * @since  1.0.0
  */
 function bp_idea_stream_set_is_new() {
 	if ( ! bp_is_group() ) {
@@ -267,13 +210,7 @@ function bp_idea_stream_set_is_new() {
 /**
  * Sets the edit idea form global to load needed scripts
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
- *
- * @uses bp_is_group() to check a group is displayed
- * @uses wp_idea_stream_set_idea_var() to set the new form global
+ * @since  1.0.0
  */
 function bp_idea_stream_set_is_edit() {
 	if ( ! bp_is_group() ) {
@@ -286,13 +223,9 @@ function bp_idea_stream_set_is_edit() {
 /**
  * Adds IdeaStream component id and slug into groups forbidden names
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  array  $names the groups forbidden names
- * @uses   wp_idea_stream_root_slug() to get the plugin's slug
  * @return array        the same names + IdeaStream forbidden ones.
  */
 function bp_idea_stream_group_forbidden_names( $names = array() ) {
@@ -310,18 +243,10 @@ add_filter( 'groups_forbidden_names', 'bp_idea_stream_group_forbidden_names', 10
 /**
  * Checks if an idea can be commented
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  bool $open    true if comments opened, false otherwise
  * @param  int  $idea_id the idea ID
- * @uses   wp_idea_stream_is_ideastream() to check if it's the plugin's territory
- * @uses   is_buddypress() to check if it's BuddyPress territory
- * @uses   wp_idea_stream_is_comments_allowed() to get IdeaStream global setting
- * @uses   get_post_field() to get the idea comments opened setting
- * @uses   apply_filters() call 'bp_idea_stream_comments_open' to override the comments opened setting
  * @return bool          the comments opened status for the idea
  */
 function bp_idea_stream_comments_open( $open = true, $idea_id = 0 ) {
@@ -355,15 +280,8 @@ add_filter( 'wp_idea_stream_comments_open', 'bp_idea_stream_comments_open', 10, 
 /**
  * Checks if the user/super admin is on the delete account screen
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
+ * @since  1.0.0
  *
- * @since  2.0.0
- *
- * @uses   bp_is_settings_component() to check if on the settings component
- * @uses   bp_is_current_action() to check for a specific BuddyPress action
- * @uses   bp_is_my_profile() to check if the user is on his self profile
- * @uses   is_super_admin() to check if the user has delete capabilities on all WordPress configs
  * @return bool true if on the delete account screen, false otherwise
  */
 function bp_idea_stream_is_delete_account() {
@@ -379,17 +297,9 @@ function bp_idea_stream_is_delete_account() {
 /**
  * Process a spammed user
  *
- * @package WP Idea Stream
- * @subpackage buddypress/functions
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int $user_id the user ID
- * @uses   add_filter() to avoid ideas to be permanently deleted
- * @uses   wp_idea_stream_users_delete_user_data() to remove user's IdeaStream Data.
- * @uses   get_comments() to get user's comment
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
- * @uses   wp_spam_comment() to spam user's comments
  */
 function bp_idea_stream_spam_user( $user_id = 0 ) {
 	if ( empty( $user_id ) ) {
@@ -422,7 +332,7 @@ add_action( 'bp_make_spam_user', 'bp_idea_stream_spam_user', 11, 1 );
  * As BuddyPress brings a "spam user" feature to regular configs,
  * let's use it!
  *
- * @since  2.3.0
+ * @since  1.0.0
  *
  * @param  bool    $is_spammer whether the user is a spammer or not
  * @param  WP_User $user       the WordPress User Object
@@ -437,6 +347,11 @@ function bp_idea_stream_is_spammy( $is_spammer, $user = null ) {
 }
 add_action( 'wp_idea_stream_users_is_spammy', 'bp_idea_stream_is_spammy', 10, 2 );
 
+/**
+ * Inject a div into the cover image template to house the cover image.
+ *
+ * @since 1.0.0
+ */
 function bp_idea_stream_embed_cover_image_container() {
 	print( '<div id="buddypress-cover-image"></div>' );
 }
@@ -445,7 +360,7 @@ add_action( 'wp_idea_stream_embed_before_content', 'bp_idea_stream_embed_cover_i
 /**
  * Add the user's cover image to his embed profile
  *
- * @since  2.3.0
+ * @since  1.0.0
  */
 function bp_idea_stream_embed_inline_style() {
 	// Get displayed user id.
@@ -509,32 +424,38 @@ add_action( 'wp_idea_stream_enqueue_embed_scripts', 'bp_idea_stream_embed_inline
  * Enqueue specific scripts and styles (if needed) to let any
  * user get the displayed user's embed link
  *
- * @since  2.3.0
+ * @since  1.0.0
  */
 function bp_idea_stream_enqueue_profile_sharing_dialog_css() {
 	if ( ! wp_idea_stream_is_embed_profile() ) {
 		return;
 	}
 
-	wp_enqueue_script( 'wp-idea-stream-script', wp_idea_stream_get_js_script( 'script' ), array( 'jquery' ), wp_idea_stream_get_version(), true );
-	wp_localize_script( 'wp-idea-stream-script', 'wp_idea_stream_vars', apply_filters( 'wp_idea_stream_users_current_profile_script', array(
-		'is_profile' => 1
-	) ) );
-
+	$bp_idea_stream = bp_idea_stream();
 	$min = '.min';
 
 	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 		$min = '';
 	}
 
-	wp_enqueue_style( 'wp-idea-stream-sharing-profile', includes_url( "css/wp-embed-template{$min}.css" ), array(), wp_idea_stream_get_version() );
+	$js_vars = array(
+		'is_profile' => 1,
+	);
+
+	wp_enqueue_script ( 'wp-idea-stream-script', wp_idea_stream_get_js_script( 'script' ), array( 'jquery' ), wp_idea_stream_get_version(), true );
+	wp_idea_stream_get_js_script_localized_data( $js_vars, 'wp-idea-stream-script', 'wp_idea_stream_users_current_profile_script' );
+
+	wp_enqueue_script( 'bp-idea-stream-script', $bp_idea_stream->js_url . "script{$min}.js", array(), $bp_idea_stream->version, true );
+	wp_localize_script( 'bp-idea-stream-script', 'bp_idea_stream_vars', apply_filters( 'bp_idea_stream_users_current_profile_script', $js_vars ) );
+
+	wp_enqueue_style( 'bp-idea-stream-sharing-profile', includes_url( "css/wp-embed-template{$min}.css" ), array(), $bp_idea_stream->version );
 }
 add_action( 'bp_idea_stream_load_member_template', 'bp_idea_stream_enqueue_profile_sharing_dialog_css' );
 
 /**
  * Add a new member-header button to open the embed profile dialog box
  *
- * @since  2.3.0
+ * @since  1.0.0
  */
 function bp_idea_stream_add_profile_sharing_dialog_button() {
 	if ( ! ( bp_is_user() && bp_is_current_component( 'ideastream' ) && wp_idea_stream_is_embed_profile() ) ) {

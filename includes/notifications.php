@@ -1,45 +1,29 @@
 <?php
 /**
- * WP Idea Stream BuddyPress integration : notifications.
+ * BP Idea Stream integration : notifications.
  *
  * BuddyPress / notifications
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
+ * @package BP Idea Stream
  *
- * @since  2.0.0
+ * @since  1.0.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Callback function to format BuddyPress notification
  *
  * @see  buddypress/loader setup_globals()
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  string $action            string identifier for the notification
  * @param  int    $item_id           the id of the object the notification relates to (ID of an idea)
  * @param  int    $secondary_item_id the user id in case of rating actions, the comment id otherwise
  * @param  int    $total_items       number of notifications having the same action
  * @param  string $format            array is WP Admin Bar, string is notifications screen
- * @uses   buddypress() to get BuddyPress main instance
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
- * @uses   bp_loggedin_user_domain() to get the logged in user profile url
- * @uses   wp_idea_stream_ideas_get_idea_permalink() to get the idea permalink
- * @uses   get_the_title() to get the title of the idea
- * @uses   bp_core_get_user_displayname() to get the user's display name
- * @uses   apply_filters() call 'bp_idea_stream_multiple_{$action}_notification' to override multiple items notification
- *                         call 'bp_idea_stream_single_{$action}_notification' to override single item notification
- * @uses   esc_url()  to sanitize url
- * @uses   esc_attr() to sanitize attribute
- * @uses   esc_html() to sanitize output
- * @uses   do_action() call 'bp_idea_stream_format_notifications' to perform custom actions once the notification is formated
  * @return string                    notification output
  */
 function bp_idea_stream_format_notifications( $action = '', $item_id = 0, $secondary_item_id = 0, $total_items = 0, $format = 'string' ) {
@@ -54,17 +38,17 @@ function bp_idea_stream_format_notifications( $action = '', $item_id = 0, $secon
 			 */
 			if ( (int) $total_items > 1 ) {
 				$url      = trailingslashit( bp_loggedin_user_domain() . $bp->ideastream->slug ) . '?notif=' . $total_items ;
-				$title    = __( 'New idea comments', 'wp-idea-stream' );
-				$text     = sprintf( __( '%d new idea comments', 'wp-idea-stream' ), (int) $total_items );
+				$title    = __( 'New idea comments', 'bp-idea-stream' );
+				$text     = sprintf( __( '%d new idea comments', 'bp-idea-stream' ), (int) $total_items );
 				$filter   = "bp_idea_stream_multiple_{$action}_notification";
 			} else {
 				$url      = wp_idea_stream_ideas_get_idea_permalink( $item_id ) . '?notif=1' ;
-				$title    = __( 'New idea comment', 'wp-idea-stream' );
-				$text     = __( 'New idea comment', 'wp-idea-stream' );
+				$title    = __( 'New idea comment', 'bp-idea-stream' );
+				$text     = __( 'New idea comment', 'bp-idea-stream' );
 
 				// Viewing notifications on user's notification screen will give a bit more infos.
 				if ( 'string' == $format ) {
-					$text = sprintf( __( 'New comment about the idea: %s', 'wp-idea-stream' ), strip_tags( get_the_title( $item_id ) ) );
+					$text = sprintf( __( 'New comment about the idea: %s', 'bp-idea-stream' ), strip_tags( get_the_title( $item_id ) ) );
 				}
 
 				$filter   = "bp_idea_stream_single_{$action}_notification";
@@ -75,18 +59,18 @@ function bp_idea_stream_format_notifications( $action = '', $item_id = 0, $secon
 		case 'new_' . wp_idea_stream_get_post_type() . '_rate' :
 			if ( (int) $total_items > 1 ) {
 				$url      = trailingslashit( bp_loggedin_user_domain() . $bp->ideastream->slug ) . '?notif=' . $total_items ;
-				$title    = __( 'New idea rating', 'wp-idea-stream' );
-				$text     = sprintf( __( '%d new idea ratings', 'wp-idea-stream' ), (int) $total_items );
+				$title    = __( 'New idea rating', 'bp-idea-stream' );
+				$text     = sprintf( __( '%d new idea ratings', 'bp-idea-stream' ), (int) $total_items );
 				$filter   = "bp_idea_stream_multiple_{$action}_notification";
 			} else {
 				$url      = wp_idea_stream_ideas_get_idea_permalink( $item_id ) . '?notif=1' ;
-				$title    = __( 'New idea rating', 'wp-idea-stream' );
-				$text     = __( 'New idea rating', 'wp-idea-stream' );
+				$title    = __( 'New idea rating', 'bp-idea-stream' );
+				$text     = __( 'New idea rating', 'bp-idea-stream' );
 
 				// Viewing notifications on user's notification screen will give a bit more infos.
 				if ( 'string' == $format ) {
 					$text = sprintf(
-						__( '%s rated the idea: %s', 'wp-idea-stream' ),
+						__( '%s rated the idea: %s', 'bp-idea-stream' ),
 						bp_core_get_user_displayname( $secondary_item_id ),
 						strip_tags( get_the_title( $item_id ) )
 					);
@@ -137,16 +121,9 @@ function bp_idea_stream_format_notifications( $action = '', $item_id = 0, $secon
 /**
  * Sends a new screen notification to the author of an idea if a new comment was approved
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  object $comment comment object
- * @uses   wp_idea_stream_comments_get_comment() to get the "ideafied" comment object
- * @uses   bp_notifications_add_notification() to save a new notification
- * @uses   buddypress() to get BuddyPress instance
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
  */
 function bp_idea_stream_comments_notify_idea_author( $comment = null ) {
 	// Bail if no author to notify
@@ -185,16 +162,9 @@ add_action( 'comment_unapproved_to_approved',        'bp_idea_stream_comments_no
 /**
  * Delete a notification in case a comment is trashed, deleted or spammed
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int $comment_id the ID of the comment
- * @uses   wp_idea_stream_comments_get_comment() to get the "ideafied" comment object
- * @uses   bp_notifications_delete_notifications_by_item_id() to delete the notification
- * @uses   buddypress() to get BuddyPress instance
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
  */
 function bp_idea_stream_comments_delete_notifications_by_comment_id( $comment_id = 0 ) {
 	// Bail, if no comment
@@ -224,16 +194,10 @@ add_action( 'delete_comment', 'bp_idea_stream_comments_delete_notifications_by_c
 /**
  * Sends a screen notification to the author in case the idea received a vote
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int $idea_id the ID of the idea
  * @param  int $user_id the ID of the user who rated the idea
- * @uses   bp_notifications_add_notification() to save a new notification
- * @uses   buddypress() to get BuddyPress instance
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
  */
 function bp_idea_stream_rates_notify_idea_author( $idea_id = 0, $user_id = 0 ) {
 	$author = get_post_field( 'post_author', $idea_id );
@@ -258,17 +222,10 @@ add_action( 'wp_idea_stream_added_rate', 'bp_idea_stream_rates_notify_idea_autho
 /**
  * Delete a notification in case a the vote was removed
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int $idea_id the ID of the idea
  * @param  int $user_id the ID of the user who rated the idea
- * @uses   get_post_field() to get the author of the idea
- * @uses   bp_notifications_delete_notifications_by_item_id() to delete the notification
- * @uses   buddypress() to get BuddyPress instance
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
  */
 function bp_idea_stream_rates_delete_notification( $idea_id = 0, $user_id = 0 ) {
 	if ( empty( $idea_id ) ) {
@@ -296,16 +253,9 @@ add_action( 'wp_idea_stream_deleted_rate', 'bp_idea_stream_rates_delete_notifica
 /**
  * Delete notifications if the idea was removed
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int $idea_id the ID of the idea
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
- * @uses   get_post_type() to get the post type of the trashed post
- * @uses   bp_notifications_delete_all_notifications_by_type() to delete the notification
- * @uses   buddypress() to get BuddyPress instance
  */
 function bp_idea_stream_delete_notifications_by_post_id( $idea_id = 0 ) {
 	// Bail if not the idea post type.
@@ -323,14 +273,9 @@ add_action( 'wp_trash_post', 'bp_idea_stream_delete_notifications_by_post_id', 1
 /**
  * Delete notifications the user received in case his account was deleted
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int $user_id the deleted user id
- * @uses   bp_notifications_delete_notifications_by_type() to delete the notifications
- * @uses   buddypress() to get BuddyPress instance
  */
 function bp_idea_stream_delete_all_user_notifications( $user_id = 0 ) {
 	if ( empty( $user_id ) ) {
@@ -345,15 +290,9 @@ add_action( 'deleted_user', 'bp_idea_stream_delete_all_user_notifications', 11, 
 /**
  * Delete notifications the user "sent" in case his account was deleted
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
+ * @since  1.0.0
  *
  * @param  int $user_id the deleted user id
- * @uses   BP_Notifications_Notification::delete() to delete the notifications
- * @uses   buddypress() to get BuddyPress instance
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
  */
 function bp_idea_stream_delete_notifications_by_user( $user_id = 0 ) {
 	if ( empty( $user_id ) ) {
@@ -372,20 +311,7 @@ add_action( 'wp_idea_stream_delete_user_rates', 'bp_idea_stream_delete_notificat
 /**
  * Mark notification(s) as read
  *
- * @package WP Idea Stream
- * @subpackage buddypress/notifications
- *
- * @since  2.0.0
- *
- * @uses   wp_idea_stream_is_single_idea() to check if viewing the single template of an idea
- * @uses   bp_notifications_mark_notifications_by_item_id() to mark notifications as read
- * @uses   bp_loggedin_user_id() to get the logged in user ID
- * @uses   wp_idea_stream_get_single_idea_id() to get the ID of the idea being viewed
- * @uses   buddypress() to get BuddyPress instance
- * @uses   wp_idea_stream_get_post_type() to get the ideas post type identifier
- * @uses   bp_is_user() to check a user's profile is displayed
- * @uses   bp_is_current_component( 'ideastream' ) to check it's an IdeaStream part of the profile
- * @uses   bp_notifications_mark_notifications_by_type() to mark notifications as read
+ * @since  1.0.0
  */
 function bp_idea_stream_comments_mark_notifications_read() {
 	if (  ! empty( $_GET['notif'] ) ) {
