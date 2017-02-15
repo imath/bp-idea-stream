@@ -2,7 +2,7 @@
 /*
 Plugin Name: BP Idea Stream
 Plugin URI: https://imathi.eu/tag/wp-idea-stream/
-Description: Share ideas, the BuddyPress Way!
+Description: WP Idea Stream addon to share ideas within a BuddyPress powered community
 Version: 1.0.0-beta
 Requires at least: 4.7
 Tested up to: 4.7
@@ -102,8 +102,16 @@ final class BP_Idea_Stream {
 	private function setup_hooks() {
 		// Remove WP Idea Stream Integration
 		add_action( 'bp_include', array( $this, 'load_component' ), 11 );
+
+		// Load translations
+		add_action( 'wp_idea_stream_loaded', array( $this, 'load_textdomain' ), 1 );
 	}
 
+	/**
+	 * Load the BuddyPress Integration
+	 *
+	 * @since  1.0.0
+	 */
 	public function load_component() {
 		remove_action( 'bp_loaded', 'wp_idea_stream_buddypress' );
 
@@ -112,6 +120,24 @@ final class BP_Idea_Stream {
 		}
 
 		require( $this->plugin_dir . 'includes/loader.php' );
+	}
+
+	/**
+	 * Loads the translation file
+	 *
+	 * @since 1.0.0
+	 */
+	public function load_textdomain() {
+		// Traditional WordPress plugin locale filter
+		$locale = apply_filters( 'plugin_locale', get_locale(), $this->domain );
+
+		if ( empty( $locale ) ) {
+			$mofile = $this->domain . '.mo';
+		} else {
+			$mofile = sprintf( '%1$s-%2$s.mo', $this->domain, $locale );
+		}
+
+		load_plugin_textdomain( $this->domain, false, trailingslashit( basename( $this->plugin_dir ) ) . 'languages' );
 	}
 }
 

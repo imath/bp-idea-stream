@@ -854,6 +854,9 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 		add_filter( 'bp_groups_list_table_get_columns',        array( $this, 'groups_manage_column_header' ), 10, 1 );
 		add_filter( 'bp_groups_admin_get_group_custom_column', array( $this, 'groups_manage_column_data'   ), 10, 3 );
+
+		/** User Feedback ************************************************************/
+		add_filter( 'wp_idea_stream_get_feedback_messages', array( $this, 'feedback_messages' ), 10, 1 );
 	}
 
 	/**
@@ -1507,26 +1510,22 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				check_admin_referer( 'group-remove-idea' );
 
 				if ( ! bp_action_variable( 2 ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Removing the idea failed.', 'bp-idea-stream' );
+					$feedback = array( 'error' => 13 );
 					break;
 				}
 
 				$idea_id = absint( bp_action_variable( 2 ) );
 
 				if ( ! wp_idea_stream_user_can( 'remove_group_ideas' ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Removing the idea failed. You do not have the capability to remove ideas.', 'bp-idea-stream' );
+					$feedback = array( 'error' => 14 );
 					break;
 				}
 
 				if ( false === $this->remove_from_group( $idea_id, $group->id ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Removing the idea failed.', 'bp-idea-stream' );
+					$feedback = array( 'error' => 13 );
 					$redirect = wp_get_referer();
 				} else {
-					$feedback['type']    = 'success';
-					$feedback['content'] = __( 'The idea was successfully removed.', 'bp-idea-stream' );
+					$feedback = array( 'success' => 6 );
 				}
 				break;
 
@@ -1537,25 +1536,21 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				$redirect = wp_get_referer();
 
 				if ( ! bp_action_variable( 2 ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Spamming the comment failed.', 'bp-idea-stream' );
+					$feedback = array( 'error' => 15 );
 					break;
 				}
 
 				$comment_id = absint( bp_action_variable( 2 ) );
 
 				if ( ! wp_idea_stream_user_can( 'spam_group_idea_comments' ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Spamming the comment failed. You do not have the capability to spam comments.', 'bp-idea-stream' );
+					$feedback = array( 'error' => 16 );
 					break;
 				}
 
 				if ( false === wp_spam_comment( $comment_id ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Spamming the comment failed.', 'bp-idea-stream' );
+					$feedback = array( 'error' => 15 );
 				} else {
-					$feedback['type']    = 'success';
-					$feedback['content'] = __( 'The comment was successfully marked as spam.', 'bp-idea-stream' );
+					$feedback = array( 'success' => 7 );
 				}
 
 				break;
@@ -1567,34 +1562,28 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				$redirect = wp_get_referer();
 
 				if ( ! bp_action_variable( 2 ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Deleting the comment failed.', 'bp-idea-stream' );
+					$feedback = array( 'success' => 18 );
 					break;
 				}
 
 				$comment_id = absint( bp_action_variable( 2 ) );
 
 				if ( ! wp_idea_stream_user_can( 'trash_group_idea_comments' ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Deleting the comment failed. You do not have the capability to delete comments.', 'bp-idea-stream' );
+					$feedback = array( 'success' => 17 );
 					break;
 				}
 
 				if ( false === wp_trash_comment( $comment_id ) ) {
-					$feedback['type']    = 'error';
-					$feedback['content'] = __( 'Deleting the comment failed.', 'bp-idea-stream' );
+					$feedback = array( 'success' => 18 );
 				} else {
-					$feedback['type']    = 'success';
-					$feedback['content'] = __( 'The comment was successfully deleted.', 'bp-idea-stream' );
+					$feedback = array( 'success' => 8 );
 				}
 
 				break;
 		}
 
 		if ( ! empty( $feedback ) ) {
-			wp_idea_stream_add_message( $feedback );
-
-			bp_core_redirect( $redirect );
+			bp_core_redirect( add_query_arg( $feedback, $redirect ) );
 		}
 
 	}
@@ -1617,7 +1606,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			bp_idea_stream_set_is_ideastream();
 
 			$actions = array_map( 'sanitize_title', (array) bp_action_variables() );
-			$message = false;
+			$message = array();
 
 			switch ( $actions[0] ) {
 				// Adding a new idea
@@ -1636,7 +1625,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						$idea_name = get_query_var( wp_idea_stream_get_post_type() );
 
 						if ( empty( $idea_name ) ) {
-							$message = __( 'No idea was requested', 'bp-idea-stream' );
+							$message = array( 'error' => 19 );
 						}
 
 						// Get the idea thanks to its name
@@ -1646,13 +1635,13 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						$user_is_editing = wp_idea_stream_ideas_lock_idea( $idea->ID );
 
 						if ( ! empty( $user_is_editing ) ) {
-							$message = sprintf( __( 'The idea: &#34;%s&#34; is already being edited by another user.', 'bp-idea-stream' ), $idea->post_title );
+							$message = array( 'info' => 3 );
 							break;
 						}
 
 						// Does the user can edit the idea ?
 						if ( ! wp_idea_stream_ideas_can_edit( $idea ) ) {
-							$message = __( 'You are not allowed to edit this idea.', 'bp-idea-stream' );
+							$message = array( 'info' => 4 );
 							break;
 						}
 
@@ -1674,7 +1663,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 							add_action( 'wp_idea_stream_ideas_the_idea_meta_edit', array( $this, 'meta_group_id' ) );
 
 						} else {
-							$message = __( 'The idea was not found in this group.', 'bp-idea-stream' );
+							$message = array( 'error' => 20 );
 						}
 
 					} else {
@@ -1686,7 +1675,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				case wp_idea_stream_idea_get_slug() :
 					// No name, stop
 					if ( empty( $actions[1] ) ) {
-						$message = __( 'No idea was requested', 'bp-idea-stream' );
+						$message = array( 'error' => 19 );
 						break;
 					}
 					// Get the idea thanks to its name
@@ -1704,7 +1693,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						wp_idea_stream_set_idea_var( 'single_idea_id', $idea->ID );
 
 					} else {
-						$message = __( 'The idea was not found in this group.', 'bp-idea-stream' );
+						$message = array( 'error' => 20 );
 					}
 					break;
 
@@ -1712,13 +1701,13 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				case wp_idea_stream_category_get_slug() :
 					// No term name, stop
 					if ( empty( $actions[1] ) ) {
-						$message = sprintf( __( 'No %s was requested', 'bp-idea-stream' ), $actions[0] );
+						$message = array( 'error' => 21 );
 						break;
 					}
 
 					// Does the group support categories ?
 					if ( $actions[0] == wp_idea_stream_category_get_slug() && ! self::group_get_option( bp_get_current_group_id(), '_group_ideastream_categories', true ) ) {
-						$message = sprintf( __( 'This group does not support the %s feature.', 'bp-idea-stream' ), $actions[0] );
+						$message = array( 'error' => 22 );
 						break;
 					}
 
@@ -1750,7 +1739,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 						// Set the current term
 						wp_idea_stream_set_idea_var( 'current_term', $this->group_ideastream->current_term );
 					} else {
-						$message = sprintf( __( 'The %s was not found', 'bp-idea-stream' ), $actions[0] );
+						$message = array( 'error' => 23 );
 						break;
 					}
 					break;
@@ -1783,12 +1772,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			}
 
 			if ( ! empty( $message ) ) {
-				wp_idea_stream_add_message( array(
-					'type'    => 'error',
-					'content' => $message,
-				) );
-
-				bp_core_redirect( $this->group_ideas_archive_url( groups_get_current_group(), true ) );
+				bp_core_redirect( add_query_arg( $message, $this->group_ideas_archive_url( groups_get_current_group(), true ) ) );
 			}
 
 		/**
@@ -3249,6 +3233,41 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 			<?php echo get_the_post_thumbnail( wp_idea_stream_ideas_get_id(), $args['size'], $args['attr'] ); ?>
 		</div><!-- .post-thumbnail -->
 		<?php
+	}
+
+	/**
+	 * Add Group ideas specific feedbacks
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  array  $messages The list of registered feedbacks.
+	 * @return array            The list of registered feedbacks.
+	 */
+	public function feedback_messages( $messages = array() ) {
+		return array_merge( $messages, array(
+			'success' => array(
+				6 => __( 'The idea was successfully removed.',           'bp-idea-stream' ),
+				7 => __( 'The comment was successfully marked as spam.', 'bp-idea-stream' ),
+				8 => __( 'The comment was successfully deleted.',        'bp-idea-stream' ),
+			),
+			'error' => array(
+				13 => __( 'Removing the idea failed.',                                                       'bp-idea-stream' ),
+				14 => __( 'Removing the idea failed. You do not have the capability to remove ideas.',       'bp-idea-stream' ),
+				15 => __( 'Spamming the comment failed.',                                                    'bp-idea-stream' ),
+				16 => __( 'Spamming the comment failed. You do not have the capability to spam comments.',   'bp-idea-stream' ),
+				17 => __( 'Deleting the comment failed. You do not have the capability to delete comments.', 'bp-idea-stream' ),
+				18 => __( 'Deleting the comment failed.',                                                    'bp-idea-stream' ),
+				19 => __( 'No idea was requested',                                                           'bp-idea-stream' ),
+				20 => __( 'The idea was not found in this group.',                                           'bp-idea-stream' ),
+				21 => __( 'No %s was requested',                                                             'bp-idea-stream' ),
+				22 => __( 'This group does not support the %s feature.',                                     'bp-idea-stream' ),
+				23 => __( 'The %s was not found',                                                            'bp-idea-stream' ),
+			),
+			'info'  => array(
+				3 => __( 'This idea is already being edited by another user.', 'bp-idea-stream' ),
+				4 => __( 'You are not allowed to edit this idea.',             'bp-idea-stream' ),
+			),
+		) );
 	}
 }
 
