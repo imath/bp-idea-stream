@@ -443,7 +443,13 @@ function bp_idea_stream_enqueue_profile_sharing_dialog_css() {
 	);
 
 	wp_enqueue_script ( 'wp-idea-stream-script', wp_idea_stream_get_js_script( 'script' ), array( 'jquery' ), wp_idea_stream_get_version(), true );
-	wp_idea_stream_get_js_script_localized_data( $js_vars, 'wp-idea-stream-script', 'wp_idea_stream_users_current_profile_script' );
+
+	// WP Idea Stream 2.4+ is used
+	if ( function_exists( 'wp_idea_stream_get_js_script_localized_data' ) ) {
+		wp_idea_stream_get_js_script_localized_data( $js_vars, 'wp-idea-stream-script', 'wp_idea_stream_users_current_profile_script' );
+	} else {
+		wp_localize_script( 'wp-idea-stream-script', 'wp_idea_stream_vars', apply_filters( 'wp_idea_stream_users_current_profile_script', $js_vars ) );
+	}
 
 	wp_enqueue_script( 'bp-idea-stream-script', $bp_idea_stream->js_url . "script{$min}.js", array(), $bp_idea_stream->version, true );
 	wp_localize_script( 'bp-idea-stream-script', 'bp_idea_stream_vars', apply_filters( 'bp_idea_stream_users_current_profile_script', $js_vars ) );
