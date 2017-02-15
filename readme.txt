@@ -29,9 +29,7 @@ Please add a new topic to the plugin's support forum.
 
 == Screenshots ==
 
-1. BuddyPress User profile.
-2. BuddyPress Group
-3. WP Idea Stream BuddyPress Settings Tab
+1. Submit form in a BuddyPress Group
 
 == Changelog ==
 
