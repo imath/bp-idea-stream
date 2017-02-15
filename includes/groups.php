@@ -1153,7 +1153,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 		}
 
 		// Check for inserted idea
-		if ( is_a( $object, 'BP_Idea_Stream_Idea' ) && ! empty( $object->metas['group_id'] ) ) {
+		if ( is_a( $object, 'WP_Idea_Stream_Idea' ) && ! empty( $object->metas['group_id'] ) ) {
 			$group_id = (int) $object->metas['group_id'];
 
 		// Check for inserted idea about a comment
@@ -3191,7 +3191,7 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 
 			if ( ! empty( $leaving_group ) && $idea->post_author == bp_loggedin_user_id() ) {
 				// Edit each idea's status and reset their group id
-				$edit_idea                    = new BP_Idea_Stream_Idea( $idea->ID );
+				$edit_idea                    = new WP_Idea_Stream_Idea( $idea->ID );
 				$edit_idea->status            = 'publish';
 				$edit_idea->metas['group_id'] = 0;
 

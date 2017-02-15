@@ -70,6 +70,9 @@ class BP_Idea_Stream_Component extends BP_Component {
 
 		// Register the specific script.
 		add_action( 'bp_admin_enqueue_scripts', array( $this, 'register_admin_scripts' ), 1 );
+
+		// Load the specific inline css
+		add_action( 'wp_idea_stream_enqueue_scripts', array( $this, 'load_inline_style' ) );
 	}
 
 	/**
@@ -251,6 +254,11 @@ class BP_Idea_Stream_Component extends BP_Component {
 		add_filter( 'wp_idea_stream_users_pre_get_user_rates_url',    'bp_idea_stream_get_user_rates_url',    10, 2 );
 	}
 
+	/**
+	 * Register the Admin script for the BuddyPress Groups metabox.
+	 *
+	 * @since  1.0.0
+	 */
 	public function register_admin_scripts() {
 		$bp_idea_stream = bp_idea_stream();
 
@@ -267,6 +275,88 @@ class BP_Idea_Stream_Component extends BP_Component {
 			$bp_idea_stream->version,
 			true
 		);
+	}
+
+	/**
+	 * Load inline style to adapt BuddyPress parts.
+	 *
+	 * @since  1.0.0
+	 */
+	public function load_inline_style() {
+		if ( ! wp_idea_stream_is_ideastream() ) {
+			return;
+		}
+
+		wp_add_inline_style( 'wp-idea-stream-style', '
+			#buddypress #wp-idea-stream h1.idea-title {
+				margin: 1em 0;
+			}
+
+			body.ideastream.bp-user #buddypress button.wp-embed-share-dialog-close {
+				border: none;
+				background: none;
+			}
+
+			body.ideastream.bp-user .wp-embed-share-dialog-open .dashicons-share {
+				background-image: none;
+			}
+
+			body.ideastream.bp-user #item-header-content {
+				position: relative;
+			}
+
+			body.ideastream.bp-user .wp-embed-share-dialog .dashicons-no:before {
+				display: none;
+			}
+
+			body.ideastream.bp-user .wp-embed-share {
+				margin: 9px 10px 0 0;
+				display: block;
+				float: left;
+			}
+
+			body.ideastream.bp-user .wp-embed-share .wp-embed-share-dialog-open {
+				border-radius: 0;
+				margin: 0;
+			}
+
+			body.ideastream.bp-user .wp-embed-share-dialog-open .dashicons {
+				top: 0px;
+				padding: 0px;
+				font-size: inherit;
+				width: auto;
+				height: auto;
+				vertical-align: middle;
+			}
+
+			body.ideastream.bp-user .wp-embed-share-dialog-open:focus .dashicons,
+			body.ideastream.bp-user .wp-embed-share-dialog-close:focus .dashicons {
+				box-shadow: none;
+			}
+
+			body.ideastream.bp-user #item-body h3:empty {
+				display: none;
+			}
+
+			#buddypress div#item-header ul.wp-embed-share-tabs li {
+				float: none;
+			}
+
+			#buddypress #wp-idea-stream .standard-form input[type="text"] {
+				width: 90%;
+			}
+
+			body.single-item.groups #buddypress #wp-idea-stream #buddydrive-btn {
+				float:none;
+				margin:1em 0;
+				display:inline-block;
+			}
+
+			body.single-item.groups #buddypress #wp-idea-stream #comments,
+			body.single-item.groups #wp-idea-stream #commentform textarea {
+				width: 100%;
+			}
+		' );
 	}
 }
 

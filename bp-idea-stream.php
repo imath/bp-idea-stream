@@ -107,6 +107,10 @@ final class BP_Idea_Stream {
 	public function load_component() {
 		remove_action( 'bp_loaded', 'wp_idea_stream_buddypress' );
 
+		if ( ! bp_is_root_blog() ) {
+			return;
+		}
+
 		require( $this->plugin_dir . 'includes/loader.php' );
 	}
 }
@@ -116,4 +120,4 @@ endif ;
 function bp_idea_stream() {
 	return BP_Idea_Stream::start();
 }
-add_action( 'plugins_loaded', 'bp_idea_stream' );
+add_action( 'plugins_loaded', 'bp_idea_stream', 9 );
