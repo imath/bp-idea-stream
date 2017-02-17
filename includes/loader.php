@@ -73,6 +73,9 @@ class BP_Idea_Stream_Component extends BP_Component {
 
 		// Load the specific inline css
 		add_action( 'wp_idea_stream_enqueue_scripts', array( $this, 'load_inline_style' ) );
+
+		// Upgrade
+		add_action( 'wp_idea_stream_admin_init', array( $this, 'upgrade' ), 1000 );
 	}
 
 	/**
@@ -358,6 +361,20 @@ class BP_Idea_Stream_Component extends BP_Component {
 			}
 		' );
 	}
+
+	/**
+	 * Upgrade routine.
+	 *
+	 * @since 1.0.0
+	 */
+	public function upgrade() {
+		$db_version     = get_option( 'bp_idea_stream_version', 0 );
+		$plugin_version = bp_idea_stream()->version;
+
+		if ( version_compare( $db_version, $plugin_version, '<' ) ) {
+			update_option( 'bp_idea_stream_version', $plugin_version );
+		}
+	}
 }
 
 endif;
@@ -387,13 +404,11 @@ function bp_idea_stream_component() {
 	if ( ! version_compare( $bp_version, $required_buddypress_version, '>=' ) ) {
 		if ( is_admin() ) {
 			wp_idea_stream_set_idea_var( 'feedback', array( 'admin_notices' => array(
-				sprintf( esc_html__( 'To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is required. Please upgrade or deactivate %s.', 'bp-idea-stream' ),
-					$required_buddypress_version,
-					'<a href="' . esc_url( add_query_arg( array( 'page' => 'ideastream' ), admin_url( 'options-general.php' ) ) ) . '#buddypress">"BuddyPress integration"</a>'
+				sprintf(
+					esc_html__( 'To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is required. Please upgrade or deactivate BP Idea Stream.', 'bp-idea-stream' ),
+					$required_buddypress_version
 				)
 			) ) );
-
-			require( bp_idea_stream()->includes_dir . 'buddypress/settings.php' );
 		}
 
 		// Prevent BuddyPress Integration load.
