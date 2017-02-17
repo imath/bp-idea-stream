@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the BP Idea Stream package.
 msgid ""
 msgstr ""
-"Project-Id-Version: BP Idea Stream 1.0.0-beta\n"
+"Project-Id-Version: BP Idea Stream 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-idea-stream\n"
-"POT-Creation-Date: 2017-02-15 19:40:40+00:00\n"
+"POT-Creation-Date: 2017-02-17 09:03:15+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -277,8 +277,8 @@ msgstr ""
 msgid "You are not allowed to edit this idea."
 msgstr ""
 
-#: includes/loader.php:390
-msgid "To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is required. Please upgrade or deactivate %s."
+#: includes/loader.php:408
+msgid "To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is required. Please upgrade or deactivate BP Idea Stream."
 msgstr ""
 
 #: includes/notifications.php:41

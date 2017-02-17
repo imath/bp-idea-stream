@@ -403,6 +403,9 @@ function bp_idea_stream_component() {
 	// Does not fire if BuddyPress integration is disabled.
 	if ( ! version_compare( $bp_version, $required_buddypress_version, '>=' ) ) {
 		if ( is_admin() ) {
+			// Make sure translation is loaded.
+			bp_idea_stream()->load_textdomain();
+
 			wp_idea_stream_set_idea_var( 'feedback', array( 'admin_notices' => array(
 				sprintf(
 					esc_html__( 'To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is required. Please upgrade or deactivate BP Idea Stream.', 'bp-idea-stream' ),
