@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BP Idea Stream 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-idea-stream\n"
-"POT-Creation-Date: 2017-02-17 09:03:15+00:00\n"
-"PO-Revision-Date: 2017-02-17 10:05+0100\n"
+"POT-Creation-Date: 2017-02-17 17:55:15+00:00\n"
+"PO-Revision-Date: 2017-02-17 18:55+0100\n"
 "Last-Translator: imath <mathchristo@yahoo.fr>\n"
 "Language-Team: imath <contact@imathi.eu>\n"
 "Language: fr\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #: includes/activity.php:201 includes/groups.php:2200
 msgctxt "activity admin dropdown caption"
@@ -132,8 +132,8 @@ msgctxt ""
 msgid ""
 "This idea was posted in %1$s from the group %4$s and tagged %2$s on %3$s."
 msgstr ""
-"Cette idée a été publiée dans %1$s depuis le groupe %4$s et étiquetée %2$s "
-"le %3$s."
+"Cette idée a été publiée dans %1$s depuis le groupe %4$s et étiquetée %2$s le "
+"%3$s."
 
 #: includes/groups.php:2019
 msgid "Edit Idea"
@@ -203,8 +203,8 @@ msgid ""
 "Only groups where WP Idea Stream is activated and where the author of this "
 "idea is a member of will show."
 msgstr ""
-"Seuls les groupes dans lesquels WP Idea Stream est activé et dont fait "
-"partie l&#39;auteur de l&#39;idée seront affichés."
+"Seuls les groupes dans lesquels WP Idea Stream est activé et dont fait partie "
+"l&#39;auteur de l&#39;idée seront affichés."
 
 #: includes/groups.php:2697
 msgid "This idea is not associated to any group"
@@ -221,50 +221,50 @@ msgid ""
 "require the idea to have the status set to private."
 msgstr ""
 "La metabox du Groupe BuddyPress permet de sélectionner un groupe, dont la "
-"auteur de la présentation est membre, pour lui rattacher la présentation. "
-"Les groupes privés ou masqués nécessitent que la présentation aient un "
-"statut définit à privé."
+"auteur de la présentation est membre, pour lui rattacher la présentation. Les "
+"groupes privés ou masqués nécessitent que la présentation aient un statut "
+"définit à privé."
 
 #: includes/groups.php:2949
 msgctxt "ideas groups admin column header"
 msgid "# Ideas"
 msgstr "# Idées"
 
-#: includes/groups.php:3249
+#: includes/groups.php:3253
 msgid "The idea was successfully removed."
 msgstr "L'idée a été retirée du Groupe."
 
-#: includes/groups.php:3250
+#: includes/groups.php:3254
 msgid "The comment was successfully marked as spam."
 msgstr "Le commentaire a été mis en spam."
 
-#: includes/groups.php:3251
+#: includes/groups.php:3255
 msgid "The comment was successfully deleted."
 msgstr "Le commentaire a été supprimé."
 
-#: includes/groups.php:3254
+#: includes/groups.php:3258
 msgid "Removing the idea failed."
 msgstr "Le retrait de l'idée du groupe a échoué"
 
-#: includes/groups.php:3255
+#: includes/groups.php:3259
 msgid ""
 "Removing the idea failed. You do not have the capability to remove ideas."
 msgstr ""
 "Le retrait de l'idée du Groupe a échoué. Vous n'avez pas les droits "
 "suffisants pour retirer les idées d'un groupe."
 
-#: includes/groups.php:3256
+#: includes/groups.php:3260
 msgid "Spamming the comment failed."
 msgstr "La mise en spam du commentaire a échoué."
 
-#: includes/groups.php:3257
+#: includes/groups.php:3261
 msgid ""
 "Spamming the comment failed. You do not have the capability to spam comments."
 msgstr ""
 "La mise en spam du commentaire a échoué. Vous n'avez pas les droits "
 "suffisants pour mettre les commentaires en spam."
 
-#: includes/groups.php:3258
+#: includes/groups.php:3262
 msgid ""
 "Deleting the comment failed. You do not have the capability to delete "
 "comments."
@@ -272,39 +272,39 @@ msgstr ""
 "La suppression du commentaire a échoué. Vous n'avez les droits suffisants "
 "pour supprimer les commentaires."
 
-#: includes/groups.php:3259
+#: includes/groups.php:3263
 msgid "Deleting the comment failed."
 msgstr "La suppression du commentaire a échoué"
 
-#: includes/groups.php:3260
+#: includes/groups.php:3264
 msgid "No idea was requested"
 msgstr "Aucune idée n'a été demandée"
 
-#: includes/groups.php:3261
+#: includes/groups.php:3265
 msgid "The idea was not found in this group."
 msgstr "L&#39;idée est introuvable dans ce groupe."
 
-#: includes/groups.php:3262
+#: includes/groups.php:3266
 msgid "No %s was requested"
 msgstr "Aucun %s n&#39;a été demandé."
 
-#: includes/groups.php:3263
+#: includes/groups.php:3267
 msgid "This group does not support the %s feature."
 msgstr "Ce groupe ne supporte pas la fonctionnalité %s."
 
-#: includes/groups.php:3264
+#: includes/groups.php:3268
 msgid "The %s was not found"
 msgstr "Désolé, aucun élément %s disponible."
 
-#: includes/groups.php:3267
+#: includes/groups.php:3271
 msgid "This idea is already being edited by another user."
 msgstr "Cette idée est déjà en cours d'édition par un autre utilisateur."
 
-#: includes/groups.php:3268
+#: includes/groups.php:3272
 msgid "You are not allowed to edit this idea."
 msgstr "Vous n'avez pas les droits suffisants pour modifier cette idée."
 
-#: includes/loader.php:408
+#: includes/loader.php:411
 msgid ""
 "To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is "
 "required. Please upgrade or deactivate BP Idea Stream."
@@ -360,16 +360,16 @@ msgid ""
 "interactions with the ideas posted on your site."
 msgstr ""
 "Partager des idées au sein d&#39;une communauté motorisée par BuddyPress "
-"améliorera les interactions entre utilisateurs en lien avec les idées "
-"postées sur votre site."
+"améliorera les interactions entre utilisateurs en lien avec les idées postées "
+"sur votre site."
 
 #: includes/settings.php:88
 msgid ""
 "The plugin&#39;s user profile becomes a new navigation in the BuddyPress "
 "member page."
 msgstr ""
-"Le profil utilisateur du plugin s&#39;intègre dans une nouvelle navigation "
-"de la page de membre de BuddyPress."
+"Le profil utilisateur du plugin s&#39;intègre dans une nouvelle navigation de "
+"la page de membre de BuddyPress."
 
 #: includes/settings.php:89
 msgid "Groups component is activated?"
@@ -413,8 +413,8 @@ msgstr "Le composant des notifications est activé ?"
 
 #: includes/settings.php:95
 msgid ""
-"Awesome! Your members will receive a screen notification when their ideas "
-"has been rated or commented upon."
+"Awesome! Your members will receive a screen notification when their ideas has "
+"been rated or commented upon."
 msgstr ""
 "Superbe, les membres de votre communauté recevront une notification lorsque "
 "leurs idées seront commentées ou évaluées."

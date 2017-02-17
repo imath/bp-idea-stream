@@ -3244,7 +3244,11 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 	 * @return array            The list of registered feedbacks.
 	 */
 	public function feedback_messages( $messages = array() ) {
-		return array_merge( $messages, array(
+		if ( empty( $messages ) ) {
+			return $messages;
+		}
+
+		$group_feedbacks =  array(
 			'success' => array(
 				6 => __( 'The idea was successfully removed.',           'bp-idea-stream' ),
 				7 => __( 'The comment was successfully marked as spam.', 'bp-idea-stream' ),
@@ -3267,7 +3271,15 @@ class BP_Idea_Stream_Group extends BP_Group_Extension {
 				3 => __( 'This idea is already being edited by another user.', 'bp-idea-stream' ),
 				4 => __( 'You are not allowed to edit this idea.',             'bp-idea-stream' ),
 			),
-		) );
+		);
+
+		foreach ( $messages as $key => $feedbacks ) {
+			if ( isset( $group_feedbacks[ $key ] ) ) {
+				$messages[ $key ] = $messages[ $key ] + $group_feedbacks[ $key ];
+			}
+		}
+
+		return $messages;
 	}
 }
 
