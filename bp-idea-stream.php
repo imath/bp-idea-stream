@@ -3,7 +3,7 @@
 Plugin Name: BP Idea Stream
 Plugin URI: https://imathi.eu/tag/wp-idea-stream/
 Description: WP Idea Stream addon to share ideas within a BuddyPress powered community
-Version: 1.0.0
+Version: 1.0.1
 Requires at least: 4.7
 Tested up to: 4.7
 License: GNU/GPL 2
@@ -70,7 +70,7 @@ final class BP_Idea_Stream {
 	 */
 	private function setup_globals() {
 		// Version
-		$this->version = '1.0.0';
+		$this->version = '1.0.1';
 
 		// Domain
 		$this->domain = 'bp-idea-stream';
@@ -100,11 +100,20 @@ final class BP_Idea_Stream {
 	 * @since 1.0.0
 	 */
 	private function setup_hooks() {
-		// Remove WP Idea Stream Integration
-		add_action( 'bp_include', array( $this, 'load_component' ), 11 );
+		// Make sure WP Idea Stream is activated before booting the plugin
+		if ( function_exists( 'wp_idea_stream' ) ) {
+			// Remove WP Idea Stream Integration
+			add_action( 'bp_include', array( $this, 'load_component' ), 11 );
 
-		// Load translations
-		add_action( 'wp_idea_stream_loaded', array( $this, 'load_textdomain' ), 1 );
+			// Load translations
+			add_action( 'wp_idea_stream_loaded', array( $this, 'load_textdomain' ), 1 );
+
+		// WP Idea Stream is not active, men it's a WP Idea Stream addon, have you read the plugin description ?!?
+		} else {
+			add_action( 'init', array( $this, 'load_textdomain' ) );
+
+			add_action( 'all_admin_notices', array( $this, 'requires_wp_idea_stream' ) );
+		}
 	}
 
 	/**
@@ -123,20 +132,30 @@ final class BP_Idea_Stream {
 	}
 
 	/**
+	 * Display a notice to inform current config does not match required one.
+	 *
+	 * @since  1.0.1
+	 */
+	public function requires_wp_idea_stream() {
+		printf(
+			'<div class="update-nag notice is-dismissible">
+				<p>%1$s <strong>%2$s</strong></p>
+				<p>%3$s</p>
+			</div>',
+			esc_html__( 'BP Idea Stream requires BuddyPress 2.5+', 'bp-idea-stream' ),
+			esc_html__( 'and WP Idea Stream 2.4+.', 'bp-idea-stream' ),
+			esc_html__( 'BP Idea Stream has been deactivated. Please activate it again once your configuration match the required one.', 'bp-idea-stream' )
+		);
+
+		deactivate_plugins( $this->basename, true );
+	}
+
+	/**
 	 * Loads the translation file
 	 *
 	 * @since 1.0.0
 	 */
 	public function load_textdomain() {
-		// Traditional WordPress plugin locale filter
-		$locale = apply_filters( 'plugin_locale', get_locale(), $this->domain );
-
-		if ( empty( $locale ) ) {
-			$mofile = $this->domain . '.mo';
-		} else {
-			$mofile = sprintf( '%1$s-%2$s.mo', $this->domain, $locale );
-		}
-
 		load_plugin_textdomain( $this->domain, false, trailingslashit( basename( $this->plugin_dir ) ) . 'languages' );
 	}
 }

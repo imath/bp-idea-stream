@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BP Idea Stream 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-idea-stream\n"
-"POT-Creation-Date: 2017-02-17 17:55:15+00:00\n"
-"PO-Revision-Date: 2017-02-17 18:55+0100\n"
+"POT-Creation-Date: 2017-02-19 11:23:12+00:00\n"
+"PO-Revision-Date: 2017-02-19 12:26+0100\n"
 "Last-Translator: imath <mathchristo@yahoo.fr>\n"
 "Language-Team: imath <contact@imathi.eu>\n"
 "Language: fr\n"
@@ -14,6 +14,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.7.1\n"
+
+#: bp-idea-stream.php:137
+msgid "BP Idea Stream requires BuddyPress 2.5+"
+msgstr ""
+"BP Idea Stream nécessite que la version de BuddyPress active soit à minima la "
+"2.5"
+
+#: bp-idea-stream.php:138
+msgid "and WP Idea Stream 2.4+."
+msgstr "et nécessite que WP Idea Stream (2.4+) soit activé."
+
+#: bp-idea-stream.php:139
+msgid ""
+"BP Idea Stream has been deactivated. Please activate it again once your "
+"configuration match the required one."
+msgstr ""
+"BP Idea Stream a été désactivé. Merci de l'activer de nouveau une fois que "
+"votre configuration correspondra à la minimale requise."
 
 #: includes/activity.php:201 includes/groups.php:2200
 msgctxt "activity admin dropdown caption"
