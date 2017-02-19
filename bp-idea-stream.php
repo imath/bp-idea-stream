@@ -100,12 +100,15 @@ final class BP_Idea_Stream {
 	 * @since 1.0.0
 	 */
 	private function setup_hooks() {
+		// Make sure WP Idea Stream is activated before booting the plugin
 		if ( function_exists( 'wp_idea_stream' ) ) {
 			// Remove WP Idea Stream Integration
 			add_action( 'bp_include', array( $this, 'load_component' ), 11 );
 
 			// Load translations
 			add_action( 'wp_idea_stream_loaded', array( $this, 'load_textdomain' ), 1 );
+
+		// WP Idea Stream is not active, men it's a WP Idea Stream addon, have you read the plugin description ?!?
 		} else {
 			add_action( 'init', array( $this, 'load_textdomain' ) );
 
@@ -128,6 +131,11 @@ final class BP_Idea_Stream {
 		require( $this->plugin_dir . 'includes/loader.php' );
 	}
 
+	/**
+	 * Display a notice to inform current config does not match required one.
+	 *
+	 * @since  1.0.1
+	 */
 	public function requires_wp_idea_stream() {
 		printf(
 			'<div class="update-nag notice is-dismissible">

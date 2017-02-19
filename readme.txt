@@ -4,7 +4,7 @@ Donate link: https://imathi.eu/donations/
 Tags: buddypress, wp-idea-stream
 Requires at least: 4.7
 Tested up to: 4.7
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GNU/GPL 2
 
 WP Idea Stream addon to share ideas within a BuddyPress powered community
@@ -33,11 +33,18 @@ Please add a new topic to the plugin's support forum.
 
 == Changelog ==
 
+= 1.0.1 =
+
+* Make sure WP Idea Stream is activated before booting the plugin.
+
 = 1.0.0 =
 
 * Plugin birth..
 
 == Upgrade Notice ==
 
-= 1.0 =
+= 1.0.1 =
+As usual when upgrading a plugin, backup your database and the wp-content's content!
+
+= 1.0.0 =
 no upgrades, this is the first version of the plugin.
