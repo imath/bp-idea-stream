@@ -2,15 +2,27 @@
 # This file is distributed under the same license as the BP Idea Stream package.
 msgid ""
 msgstr ""
-"Project-Id-Version: BP Idea Stream 1.0.0\n"
+"Project-Id-Version: BP Idea Stream 1.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-idea-stream\n"
-"POT-Creation-Date: 2017-02-17 17:55:15+00:00\n"
+"POT-Creation-Date: 2017-02-19 11:23:12+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: bp-idea-stream.php:137
+msgid "BP Idea Stream requires BuddyPress 2.5+"
+msgstr ""
+
+#: bp-idea-stream.php:138
+msgid "and WP Idea Stream 2.4+."
+msgstr ""
+
+#: bp-idea-stream.php:139
+msgid "BP Idea Stream has been deactivated. Please activate it again once your configuration match the required one."
+msgstr ""
 
 #: includes/activity.php:201 includes/groups.php:2200
 msgctxt "activity admin dropdown caption"
