@@ -477,3 +477,13 @@ function bp_idea_stream_add_profile_sharing_dialog_button() {
 	remove_filter( 'wp_idea_stream_users_displayed_user_id', 'bp_displayed_user_id' );
 }
 add_action( 'bp_member_header_actions', 'bp_idea_stream_add_profile_sharing_dialog_button', 100 );
+
+/**
+ * If BuddyDrive is activated, then use it to allow files
+ * to be added to ideas !
+ *
+ * @since  1.0.2
+ */
+function bp_idea_stream_buddydrive_button() {
+	buddydrive_editor();
+}

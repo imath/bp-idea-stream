@@ -3,9 +3,9 @@
 Plugin Name: BP Idea Stream
 Plugin URI: https://imathi.eu/tag/wp-idea-stream/
 Description: WP Idea Stream addon to share ideas within a BuddyPress powered community
-Version: 1.0.1
+Version: 1.0.2
 Requires at least: 4.7
-Tested up to: 4.7
+Tested up to: 4.8
 License: GNU/GPL 2
 Author: imath
 Author URI: https://imathi.eu/
@@ -70,7 +70,7 @@ final class BP_Idea_Stream {
 	 */
 	private function setup_globals() {
 		// Version
-		$this->version = '1.0.1';
+		$this->version = '1.0.2';
 
 		// Domain
 		$this->domain = 'bp-idea-stream';

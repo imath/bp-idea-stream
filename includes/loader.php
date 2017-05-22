@@ -76,6 +76,11 @@ class BP_Idea_Stream_Component extends BP_Component {
 
 		// Upgrade
 		add_action( 'wp_idea_stream_admin_init', array( $this, 'upgrade' ), 1000 );
+
+		// Use BuddyDrive to Attach Media if available.
+		if ( function_exists( 'buddydrive_editor' ) ) {
+			add_action( 'wp_idea_stream_media_buttons', 'bp_idea_stream_buddydrive_button' );
+		}
 	}
 
 	/**
