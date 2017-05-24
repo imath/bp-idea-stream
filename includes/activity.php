@@ -189,6 +189,15 @@ class BP_Idea_Stream_Activity {
 	 */
 	public function register_activity_actions() {
 		/**
+		 * Filter here to format the admin caption.
+		 *
+		 * @since  1.0.2
+		 *
+		 * @param string $singular_name The admin caption.
+		 */
+		$admin_caption = apply_filters( 'bp_idea_stream_activity_admin_caption', $this->post_type_object->labels->singular_name );
+
+		/**
 		 * Used internally to add the IdeaStream Groups activities
 		 * @see BP_Idea_Stream_Group::group_activity_context()
 		 *
@@ -198,7 +207,7 @@ class BP_Idea_Stream_Activity {
 			'new_' . $this->post_type => (object) array(
 				'component'         => buddypress()->blogs->id,
 				'type'              => 'new_' . $this->post_type,
-				'admin_caption'     => sprintf( _x( 'New %s published', 'activity admin dropdown caption', 'bp-idea-stream' ), mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ),
+				'admin_caption'     => sprintf( _x( 'New %s published', 'activity admin dropdown caption', 'bp-idea-stream' ), $admin_caption ),
 				'action_callback'   => array( $this, 'format_idea_activity_action' ),
 				'front_caption'     => sprintf( _x( '%s', 'activity front dropdown caption', 'bp-idea-stream' ), $this->post_type_object->labels->name ),
 				'contexts'          => array( 'activity', 'member' ),
@@ -206,7 +215,7 @@ class BP_Idea_Stream_Activity {
 			'new_' . $this->post_type . '_comment' => (object) array(
 				'component'         => buddypress()->blogs->id,
 				'type'              => 'new_' . $this->post_type . '_comment',
-				'admin_caption'     => sprintf( _x( 'New %s comment posted', 'activity comment admin dropdown caption', 'bp-idea-stream' ), mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ),
+				'admin_caption'     => sprintf( _x( 'New %s comment posted', 'activity comment admin dropdown caption', 'bp-idea-stream' ), $admin_caption ),
 				'action_callback'   => array( $this, 'format_idea_comment_activity_action' ),
 				'front_caption'     => sprintf( _x( '%s comments', 'activity comments front dropdown caption', 'bp-idea-stream' ), $this->post_type_object->labels->singular_name ),
 				'contexts'          => array( 'activity', 'member' ),
@@ -456,10 +465,19 @@ class BP_Idea_Stream_Activity {
 			return false;
 		}
 
+		/**
+		 * Filter here to format the Post action name.
+		 *
+		 * @since  1.0.2
+		 *
+		 * @param string $singular_name the Post action name.
+		 */
+		$post_action_name = apply_filters( 'bp_idea_stream_activity_post_action_name', $this->post_type_object->labels->singular_name );
+
 		$action = sprintf(
 			_x( '%1$s wrote a new %2$s', 'idea posted activity action', 'bp-idea-stream' ),
 			bp_core_get_userlink( $activity->user_id ),
-			'<a href="' . esc_url( $activity->primary_link ) . '">' . esc_html( mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ) . '</a>'
+			'<a href="' . esc_url( $activity->primary_link ) . '">' . esc_html( $post_action_name ) . '</a>'
 		);
 
 		return apply_filters( 'bp_idea_stream_format_idea_activity_action', $action );
@@ -485,10 +503,19 @@ class BP_Idea_Stream_Activity {
 			$primary_link = $activity->primary_link;
 		}
 
+		/**
+		 * Filter here to format the Comment action name.
+		 *
+		 * @since  1.0.2
+		 *
+		 * @param string $singular_name the Comment action name.
+		 */
+		$comment_action_name = apply_filters( 'bp_idea_stream_activity_comment_action_name', $this->post_type_object->labels->singular_name );
+
 		$action = sprintf(
 			_x( '%1$s replied to this %2$s', 'idea commented activity action', 'bp-idea-stream' ),
 			bp_core_get_userlink( $activity->user_id ),
-			'<a href="' . esc_url( $primary_link ) . '">' . esc_html( mb_strtolower( $this->post_type_object->labels->singular_name, 'UTF-8' ) ) . '</a>'
+			'<a href="' . esc_url( $primary_link ) . '">' . esc_html( $comment_action_name ) . '</a>'
 		);
 
 		return apply_filters( 'bp_idea_stream_format_idea_comment_activity_action', $action );

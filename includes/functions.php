@@ -487,3 +487,18 @@ add_action( 'bp_member_header_actions', 'bp_idea_stream_add_profile_sharing_dial
 function bp_idea_stream_buddydrive_button() {
 	buddydrive_editor();
 }
+
+/**
+ * UTF8 lower case string.
+ *
+ * @since  1.0.0
+ *
+ * @param  string $value The text to lower case.
+ * @return string        The formatted text.
+ */
+function bp_idea_stream_lower_case( $value = '' ) {
+	return mb_strtolower( $value, 'UTF-8' );
+}
+add_filter( 'bp_idea_stream_activity_admin_caption',       'bp_idea_stream_lower_case' );
+add_filter( 'bp_idea_stream_activity_post_action_name',    'bp_idea_stream_lower_case' );
+add_filter( 'bp_idea_stream_activity_comment_action_name', 'bp_idea_stream_lower_case' );
