@@ -4,3 +4,4 @@
 /phpunit.xml.dist export-ignore
 /tests export-ignore
 /README.md export-ignore
+/LICENSE export-ignore
