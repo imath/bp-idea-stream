@@ -8,7 +8,7 @@ Configuration needed
 
 + WordPress 4.7
 + WP Idea Stream 2.4
-+ BuddyPress 2.5+
++ BuddyPress 2.6+
 
 Installation
 ------------
