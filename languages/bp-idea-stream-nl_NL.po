@@ -1,0 +1,454 @@
+# Copyright (C) 2017 BP Idea Stream
+# This file is distributed under the same license as the BP Idea Stream package.
+msgid ""
+msgstr ""
+"Project-Id-Version: BP Idea Stream 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-idea-stream\n"
+"POT-Creation-Date: 2017-02-19 11:23:12+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-07-25 20:50+0200\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.3\n"
+"Last-Translator: \n"
+"Language: nl_NL\n"
+
+#: bp-idea-stream.php:137
+msgid "BP Idea Stream requires BuddyPress 2.5+"
+msgstr "BP Idea Stream vereist BuddyPress 2.5+"
+
+#: bp-idea-stream.php:138
+msgid "and WP Idea Stream 2.4+."
+msgstr "en WP Idea Stream 2.4+."
+
+#: bp-idea-stream.php:139
+msgid ""
+"BP Idea Stream has been deactivated. Please activate it again once your "
+"configuration match the required one."
+msgstr ""
+"BP Idea Stream is gedeactiveerd. Activeer deze opnieuw wanneer je "
+"configuratie overeenkomt met de vereiste vorm."
+
+#: includes/activity.php:201 includes/groups.php:2200
+msgctxt "activity admin dropdown caption"
+msgid "New %s published"
+msgstr "Nieuwe %s gepubliceerd"
+
+#: includes/activity.php:203 includes/groups.php:2202
+msgctxt "activity front dropdown caption"
+msgid "%s"
+msgstr "%s"
+
+#: includes/activity.php:209 includes/groups.php:2208
+msgctxt "activity comment admin dropdown caption"
+msgid "New %s comment posted"
+msgstr "Nieuw %s commentaar geplaatst"
+
+#: includes/activity.php:211 includes/groups.php:2210
+msgctxt "activity comments front dropdown caption"
+msgid "%s comments"
+msgstr "% commentaren"
+
+#: includes/activity.php:460
+msgctxt "idea posted activity action"
+msgid "%1$s wrote a new %2$s"
+msgstr "%1$s heefft een nieuwe %2$s geplaatst"
+
+#: includes/activity.php:489
+msgctxt "idea commented activity action"
+msgid "%1$s replied to this %2$s"
+msgstr "%1$s heeft op dit gereageerd %2$s"
+
+#: includes/activity.php:1197
+msgid "Repair WP Idea Stream activities."
+msgstr "Repareer WP Idea Stream activiteiten."
+
+#: includes/activity.php:1221
+msgid "Making sure WP Idea Stream activities are consistent: %s"
+msgstr "Bezig verzekeren dat WP Idea Stream activiteiten consistent zijn: %s"
+
+#: includes/activity.php:1224
+msgid "No activity needs to be repaired."
+msgstr "Geen activiteit vereist herstel."
+
+#: includes/activity.php:1364
+msgid "%d repared"
+msgstr "%d gerepareerd"
+
+#: includes/groups.php:182 includes/groups.php:190
+msgid "%s group settings"
+msgstr "%s groepsinstellingen"
+
+#: includes/groups.php:199
+msgid "Activate %s."
+msgstr "Activeren %s."
+
+#: includes/groups.php:208
+msgid "Allow members to comment on ideas."
+msgstr "Leden toestaan op ideeën commentaar te geven."
+
+#: includes/groups.php:217
+msgid "Use Categories."
+msgstr "Gebruik categorieën."
+
+#: includes/groups.php:240
+msgid "Remove all ideas."
+msgstr "Verwijder alle ideeën."
+
+#: includes/groups.php:248
+msgid "Save"
+msgstr "Opslaan"
+
+#: includes/groups.php:307
+msgid "Settings saved successfully"
+msgstr "Instellingen succesvol opgeslagen"
+
+#: includes/groups.php:872
+msgid "BuddyPress Groups"
+msgstr "BuddyPress Groepen"
+
+#: includes/groups.php:893
+msgid "Activate WP Idea Stream in Groups"
+msgstr "WP Idea Stream voor Groepen activeren"
+
+#: includes/groups.php:1670
+msgid "The action requested is not available"
+msgstr "De geselecteerde actie is niet beschikbaar"
+
+#: includes/groups.php:1841
+msgid "You must be a member of the group to post ideas"
+msgstr "Je moet lid van deze groep zijn om ideeën te plaatsen"
+
+#. Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
+#: includes/groups.php:1972
+msgctxt "group idea footer utility text"
+msgid "This idea was posted from the group %4$s on %3$s."
+msgstr "Dit idee is geplaatst vanuit de groep %4$s op %3$s."
+
+#. Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
+#: includes/groups.php:1976
+msgctxt "group idea attached to at least one category footer utility text"
+msgid "This idea was posted in %1$s from the group %4$s on %3$s."
+msgstr "Dit idee werd geplaatst in %1$s van de groep %4$s op %3$s."
+
+#. Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
+#: includes/groups.php:1984
+msgctxt "group idea attached to at least one tag footer utility text"
+msgid "This idea was tagged %2$s and posted from the group %4$s on %3$s."
+msgstr ""
+"Dit idee werd als %2$s getagd en geplaatst vanuit de groep %4$s op %3$s."
+
+#. Translators: 1 is category, 2 is tag, 3 is the date and 4 is group link.
+#: includes/groups.php:1989
+msgctxt ""
+"group idea attached to at least one tag and one category footer utility text"
+msgid ""
+"This idea was posted in %1$s from the group %4$s and tagged %2$s on %3$s."
+msgstr ""
+"Dit idee werd geplaatst in %1$s van de groep %4$s en getagd met %2$s op %3$s."
+
+#: includes/groups.php:2019
+msgid "Edit Idea"
+msgstr "Idee bewerken"
+
+#: includes/groups.php:2028
+msgid "Remove Idea"
+msgstr "Idee verwijderen"
+
+#: includes/groups.php:2090
+msgid "Spam comment"
+msgstr "Spam commentaar"
+
+#: includes/groups.php:2090
+msgid "Spam"
+msgstr "Spam"
+
+#: includes/groups.php:2095
+msgid "Delete comment"
+msgstr "Commentaar verwijderen"
+
+#: includes/groups.php:2095
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: includes/groups.php:2465
+msgctxt "idea posted group activity action"
+msgid "%1$s wrote a new %2$s in the group %3$s"
+msgstr "%1$s heeft een nieuw %2$s in de groep %3$s geplaatst"
+
+#: includes/groups.php:2510
+msgctxt "idea commented group activity action"
+msgid "%1$s replied to this %2$s posted in the group %3$s"
+msgstr "%1$s reageerde op dit %2$s geplaatst in de groep %3$s"
+
+#: includes/groups.php:2628
+msgid "BuddyPress Group"
+msgstr "BuddyPress Group"
+
+#: includes/groups.php:2646
+msgid "The author of the idea needs to be a member of the group selected"
+msgstr "De maker van het idee moet een lid zijn van de geselecteerde groep"
+
+#: includes/groups.php:2647
+msgid "Idea successfully removed from group"
+msgstr "Idee succesvol verwijderd uit de groep"
+
+#: includes/groups.php:2648
+msgid "Idea successfully added to group"
+msgstr "Idee succesvol aan de groep toegevoegd"
+
+#: includes/groups.php:2649
+msgid "Status of the idea is not compatible with the group visibility"
+msgstr ""
+"Zichtbaarheids-status van het idee is niet compatibel met de eigenschappen "
+"van de groep"
+
+#: includes/groups.php:2650
+msgid "Group was not found."
+msgstr "Groep is niet gevonden."
+
+#: includes/groups.php:2681
+msgid "Search in groups to select one:"
+msgstr "Zoek in groepen om er één te selecteren:"
+
+#: includes/groups.php:2684
+msgid ""
+"Only groups where WP Idea Stream is activated and where the author of this "
+"idea is a member of will show."
+msgstr ""
+"Alleen groepen waar WP Idea Stream is geactiveerd en waar de maker van dit "
+"idee lid is worden getoond."
+
+#: includes/groups.php:2697
+msgid "This idea is not associated to any group"
+msgstr "Dit idee is niet aan een bestaande groep gekoppeld"
+
+#: includes/groups.php:2853
+msgid "Groups"
+msgstr "Groepen"
+
+#: includes/groups.php:2901
+msgid ""
+"The Buddypress Group metabox allows you to select a group the author is "
+"member of, and attach the idea to that group. Private or hidden groups will "
+"require the idea to have the status set to private."
+msgstr ""
+"De BuddyPress Group metabox stelt je in staat een groep te selecteren waar "
+"de maker lid van is, en het idee te koppelen aan die groep. Privé of "
+"verborgen groepen vereisen dat het idee privé als zichtbaarheids-status "
+"heeft."
+
+#: includes/groups.php:2949
+msgctxt "ideas groups admin column header"
+msgid "# Ideas"
+msgstr "# Ideeën"
+
+#: includes/groups.php:3253
+msgid "The idea was successfully removed."
+msgstr "Het idee is succesvol verwijderd."
+
+#: includes/groups.php:3254
+msgid "The comment was successfully marked as spam."
+msgstr "Het commentaar is succesvol aangemerkt als spam."
+
+#: includes/groups.php:3255
+msgid "The comment was successfully deleted."
+msgstr "Het commentaar is succesvol verwijderd."
+
+#: includes/groups.php:3258
+msgid "Removing the idea failed."
+msgstr "Het is mislukt het idee te verwijderen."
+
+#: includes/groups.php:3259
+msgid ""
+"Removing the idea failed. You do not have the capability to remove ideas."
+msgstr ""
+"Het is mislukt het idee te verwijderen. Je hebt niet de rechten om ideeën te "
+"verwijderen."
+
+#: includes/groups.php:3260
+msgid "Spamming the comment failed."
+msgstr "Het is mislukt het commentaar als spam aan te merken."
+
+#: includes/groups.php:3261
+msgid ""
+"Spamming the comment failed. You do not have the capability to spam comments."
+msgstr ""
+"Het is mislukt het commentaar als spam aan te merken. Je hebt niet de "
+"rechten om commentaren als spam aan te merken."
+
+#: includes/groups.php:3262
+msgid ""
+"Deleting the comment failed. You do not have the capability to delete "
+"comments."
+msgstr ""
+"Het is mislukt het commentaar te verwijderen.  Je hebt niet de rechten om "
+"commentaren te verwijderen."
+
+#: includes/groups.php:3263
+msgid "Deleting the comment failed."
+msgstr "Het is mislukt het commentaar te verwijderen."
+
+#: includes/groups.php:3264
+msgid "No idea was requested"
+msgstr "Er werd geen idee opgevraagd"
+
+#: includes/groups.php:3265
+msgid "The idea was not found in this group."
+msgstr "Het idee werd niet in deze groep gevonden."
+
+#: includes/groups.php:3266
+msgid "No %s was requested"
+msgstr "Er werd geen %s opgevraagd"
+
+#: includes/groups.php:3267
+msgid "This group does not support the %s feature."
+msgstr "Deze groep ondersteunt niet de %s functie."
+
+#: includes/groups.php:3268
+msgid "The %s was not found"
+msgstr "De %s werd niet gevonden"
+
+#: includes/groups.php:3271
+msgid "This idea is already being edited by another user."
+msgstr "Dit idee wordt al door een andere gebruiker bewerkt."
+
+#: includes/groups.php:3272
+msgid "You are not allowed to edit this idea."
+msgstr "Je hebt niet de rechten om dit idee te bewerken."
+
+#: includes/loader.php:411
+msgid ""
+"To benefit of WP Idea Stream in BuddyPress, version %s of BuddyPress is "
+"required. Please upgrade or deactivate BP Idea Stream."
+msgstr ""
+"Om van WP Idea Stream in BuddyPress gebruik te maken is versie %s van "
+"BuddyPress vereist. Update of deactiveer BP Idea Stream."
+
+#: includes/notifications.php:41
+msgid "New idea comments"
+msgstr "Nieuwe idee commentaren"
+
+#: includes/notifications.php:42
+msgid "%d new idea comments"
+msgstr "%d nieuwe idee reacties"
+
+#: includes/notifications.php:46 includes/notifications.php:47
+msgid "New idea comment"
+msgstr "Nieuw idee commentaar"
+
+#: includes/notifications.php:51
+msgid "New comment about the idea: %s"
+msgstr "Nieuw commentaar op het idee: %s"
+
+#: includes/notifications.php:62 includes/notifications.php:67
+#: includes/notifications.php:68
+msgid "New idea rating"
+msgstr "Nieuwe idee-beoordeling"
+
+#: includes/notifications.php:63
+msgid "%d new idea ratings"
+msgstr "%d nieuwe idee-beoordelingen"
+
+#: includes/notifications.php:73
+msgid "%s rated the idea: %s"
+msgstr "%s beoordeelde het idee: %s"
+
+#: includes/settings.php:32
+msgid "BuddyPress"
+msgstr "BuddyPress"
+
+#: includes/settings.php:67
+msgid "Customize the way WP Idea Stream should play with BuddyPress."
+msgstr ""
+"Stel de manier in waarop WP Idea Stream samen moet werken met BuddyPress."
+
+#: includes/settings.php:84
+msgid "BuddyPress Integration Settings"
+msgstr "BuddyPress integratie instellingen"
+
+#: includes/settings.php:86
+msgid ""
+"Sharing Ideas in a BuddyPress powered community will improve user "
+"interactions with the ideas posted on your site."
+msgstr ""
+"Ideeën delen in een BuddyPress omgeving zal de interactie van gebruikers met "
+"de ideeën op je website vergroten."
+
+#: includes/settings.php:88
+msgid ""
+"The plugin&#39;s user profile becomes a new navigation in the BuddyPress "
+"member page."
+msgstr ""
+"De plugin&#39;s gebruikers profiel wordt een nieuw navigatie-element op de "
+"BuddyPress ledenpagina."
+
+#: includes/settings.php:89
+msgid "Groups component is activated?"
+msgstr "Groups-component is geactiveerd?"
+
+#: includes/settings.php:90
+msgid ""
+"Nice! It’s now possible to share ideas within these micro-communities "
+"ensuring their members that the group&#39;s visibility is transposed to the "
+"status of their ideas."
+msgstr ""
+"Nice! Het is nu mogelijk om ideeën te delen binnen deze micro-communities, "
+"waarbij de zichtbaarheidsinstelling van de groep ook van toepassing blijft "
+"op de door leden geplaatste ideeën."
+
+#: includes/settings.php:91
+msgid ""
+"You may prefer to disable WP Idea Stream&#39;s Group integration. This is "
+"possible by deactivating the &#34;BuddyPress Groups setting&#34;."
+msgstr ""
+"Mogelijk geef je er de voorkeur aan WP Idea Stream groepen-integratie uit te "
+"schakelen. Dit is mogelijk door de  &#34;BuddyPress Groups instelling&#34; "
+"te deactiveren."
+
+#: includes/settings.php:92
+msgid "Site Tracking and Activity components are activated?"
+msgstr "Site Tracking en Activity componenten zijn geactiveerd?"
+
+#: includes/settings.php:93
+msgid ""
+"Great! Each time a new idea or a new comment about an idea is posted, the "
+"members of your community will be informed through an activity update."
+msgstr ""
+"Top! Elke keer dat er een nieuw idee of commentaar op een idee wordt "
+"geplaatst worden de leden van je community op de hoogte gebracht met een "
+"activiteit-melding."
+
+#: includes/settings.php:94
+msgid "Notifications component is activated?"
+msgstr "Meldingen-component geactiveerd?"
+
+#: includes/settings.php:95
+msgid ""
+"Awesome! Your members will receive a screen notification when their ideas "
+"has been rated or commented upon."
+msgstr ""
+"Awesome! Je leden ontvangen een schermmelding wanneer hun ideeën beoordeeld "
+"of becommentariëerd zijn."
+
+#. Plugin Name of the plugin/theme
+msgid "BP Idea Stream"
+msgstr "BP Idea Stream"
+
+#. Plugin URI of the plugin/theme
+msgid "https://imathi.eu/tag/wp-idea-stream/"
+msgstr "https://imathi.eu/tag/wp-idea-stream/"
+
+#. Description of the plugin/theme
+msgid ""
+"WP Idea Stream addon to share ideas within a BuddyPress powered community"
+msgstr "WP IdeaStream addon om ideeën te delen binnen een Buddypress community"
+
+#. Author of the plugin/theme
+msgid "imath"
+msgstr "imath"
+
+#. Author URI of the plugin/theme
+msgid "https://imathi.eu/"
+msgstr "https://imathi.eu/"
