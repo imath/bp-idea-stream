@@ -347,12 +347,14 @@ class BP_Idea_Stream_Activity {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param  string  $activity_content the excerpt created by BuddyPress
-	 * @param  WP_Post $post             the post object (can be an idea)
-	 * @param  string  $post_permalink   the permalink to this object
-	 * @return string                    the activity content unchanged
+	 * @param bool $value      Whether or not to continue.
+	 * @param int  $blog_id    ID of the current site.
+	 * @param int  $post_id    ID of the current post being commented.
+	 * @param int  $user_id    ID of the current user.
+	 * @param int  $comment_id ID of the current comment being posted.
+	 * @return bool False to interrupt activity publishing about the comment. True otherwise.
 	 */
-	public function catch_idea_comment( $retval = true, $blog_id, $post_id, $user_id, $comment_id ) {
+	public function catch_idea_comment( $retval, $blog_id, $post_id, $user_id, $comment_id ) {
 		// First remove the filter if needed!
 		if ( ! empty( $this->allowed_private_comment ) ) {
 			unset( $this->allowed_private_comment );
